@@ -3,10 +3,10 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - consolify-frontend',
-    title: 'consolify-frontend',
+    titleTemplate: '%s - 玲行云端控制台',
+    title: '玲行云端控制台',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'zh-CN'
     },
     meta: [
       { charset: 'utf-8' },
