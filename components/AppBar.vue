@@ -1,6 +1,7 @@
 <template>
   <v-app-bar
-    elevation="4"
+    color="white"
+    elevation="0"
     app
   >
     <v-app-bar-nav-icon />

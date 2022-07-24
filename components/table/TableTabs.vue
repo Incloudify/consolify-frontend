@@ -1,7 +1,7 @@
 <!-- 工作台导航 -->
 <template>
   <div>
-    <v-toolbar>
+    <v-toolbar elevation="0">
       <v-tabs>
         <!-- 概览导航头部 开始 -->
         <v-tab
