@@ -4,7 +4,7 @@
     <!-- 公告行 开始 -->
     <v-row>
       <v-col>
-        <v-alert icon="mdi-bullhorn-outline" type="info">
+        <v-alert icon="mdi-bullhorn-outline" :type="announcementLevel">
           公告: {{ announcement }}
         </v-alert>
       </v-col>
@@ -36,6 +36,7 @@ export default {
   data: () => ({
     tableFundCurrent: 0,
     announcement: '近日行云因遭大流量攻击, 产品运行可能不稳定。',
+    announcementLevel: 'warning',
     productsInfo: {
       products: [
         {
