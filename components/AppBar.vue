@@ -1,6 +1,7 @@
 <template>
   <v-app-bar
     elevation="4"
+    app
   >
     <v-app-bar-nav-icon />
     <v-toolbar-title>{{ siteName }}控制台</v-toolbar-title>
