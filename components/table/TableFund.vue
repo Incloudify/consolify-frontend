@@ -3,7 +3,7 @@
   <div>
     <!-- 卡片是好文明 -->
     <v-card
-      height="200px"
+      max-height="600px"
     >
       <v-card-title>
         爷的余额
@@ -14,7 +14,16 @@
           元
         </p>
       </v-card-text>
-      <v-card-actions>
+      <v-alert
+      dense
+      type="error"
+      icon="mdi-alert-octagon-outline"
+      border="left"
+      v-if="TableFundCurrent < 0"
+      >
+        你的账户发生欠费, 请尽快补齐款项, 否则你的账户及名下资产将在 <strong>{{ deletionRemainDays }} 日后被删除</strong>
+      </v-alert>
+      <v-card-actions style="padding-bottom: 20px;">
         <v-btn color="primary">
           <v-icon>mdi-cash</v-icon>
           氪金
@@ -30,7 +39,14 @@
 <script>
 export default {
   data: () => ({
-    TableFundCurrent: 0
+    TableFundCurrent: -86837,
+    deletionRemainDays: 3
   })
 }
 </script>
+<style>
+.v-alert{
+  font-size: 7px;
+  border-radius: 0px !important;
+}
+</style>
