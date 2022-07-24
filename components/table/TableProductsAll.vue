@@ -11,13 +11,11 @@
     </v-row>
     <!-- 公告行 结束 -->
     <!-- 产品标题 开始 -->
-    <v-row>
-      <div
-        class="text-h6"
-      >
-        产品
-      </div>
-    </v-row>
+    <div
+      class="text-h6"
+    >
+      产品
+    </div>
     <!-- 产品标题 结束 -->
     <!-- 产品行 开始 -->
     <v-row>
@@ -93,5 +91,8 @@ export default {
 }
 .productbtninvisit {
   display: none;
+}
+.text-h6{
+  margin-bottom: 15px;
 }
 </style>
