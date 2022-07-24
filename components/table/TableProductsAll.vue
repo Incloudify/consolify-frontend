@@ -4,8 +4,8 @@
     <!-- 公告行 开始 -->
     <v-row>
       <v-col>
-        <v-alert type="info">
-          Where there is a will, there is a way
+        <v-alert icon="mdi-bullhorn-outline" type="info">
+          公告: {{ announcement }}
         </v-alert>
       </v-col>
     </v-row>
@@ -81,7 +81,8 @@
 <script>
 export default {
   data: () => ({
-    tableFundCurrent: 0
+    tableFundCurrent: 0,
+    announcement: '近日行云因遭大流量攻击, 产品运行可能不稳定。'
   })
 }
 </script>

@@ -2,3 +2,17 @@
   --primary-color: #2196F3;
   --blur: none;
 }
+
+a:not(.v-btn, .v-card, .v-chip, .v-list-item) {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover:not(.v-btn, .v-card, .v-chip, .v-list-item),
+a:focus:not(.v-btn, .v-card, .v-chip, .v-list-item) {
+  text-decoration: none;
+}
+
+a.text-color:hover {
+  color: var(--text) !important;
+}
