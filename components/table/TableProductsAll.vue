@@ -21,7 +21,7 @@
     <v-row>
       <div v-for="products in productsInfo.products" :key="products.key" class="products-div">
         <v-col v-if="products.retention">
-          <v-btn>
+          <v-btn class="productbtn">
             {{ products.productName }} ({{ products.retentionCount }})
           </v-btn>
         </v-col>
@@ -89,7 +89,7 @@ export default {
 
 <style>
 .productbtn {
-  width: 100%;
+  width: 140px;
 }
 .text-h6{
   margin-bottom: 15px;
