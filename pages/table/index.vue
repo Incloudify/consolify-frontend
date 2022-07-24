@@ -1,16 +1,11 @@
+<!-- 工作台首页 概览页 -->
 <template>
-  <v-row>
-    <v-col
-      sm="9"
-    >
-      <TableTabs />
-    </v-col>
-    <v-col
-      sm="3"
-    >
-      <TableFund />
-    </v-col>
-  </v-row>
+  <div>
+    <TableTabs />
+    <!-- 比较硬核的空行 -->
+    <br>
+    <TableViewall />
+  </div>
 </template>
 
 <script>

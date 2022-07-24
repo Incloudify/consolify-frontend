@@ -21,7 +21,7 @@ export default {
   },
   data () {
     return {
-      errorMessage: 'I think something bad happened :D:D:D:D' + this.error.statusCode
+      errorMessage: '站点错误：错误码为 ' + this.error.statusCode
     }
   },
   head () {
