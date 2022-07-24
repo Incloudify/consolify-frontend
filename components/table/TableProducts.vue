@@ -3,12 +3,13 @@
   <div>
     <v-card
       height="600px"
+      class="pa-4"
     >
       <v-card-title>
         产品导航
       </v-card-title>
       <v-card-text>
-        <!-- 继续拆分模块，超级嵌套爽死你 -->
+        <TableProductsAll />
       </v-card-text>
     </v-card>
   </div>

@@ -9,15 +9,13 @@
         sm="3"
       >
         <TableFund />
+        <br>
+        <TableTodo />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    tableFundCurrent: 0
-  })
-}
+export default {}
 </script>

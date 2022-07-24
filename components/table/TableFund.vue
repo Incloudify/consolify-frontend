@@ -10,7 +10,7 @@
       </v-card-title>
       <v-card-text>
         <p class="display-1 text--primary">
-          {{ tableFundCurrent }}
+          {{ TableFundCurrent }}
           元
         </p>
       </v-card-text>
@@ -30,7 +30,7 @@
 <script>
 export default {
   data: () => ({
-    tableFundCurrent: 0
+    TableFundCurrent: 0
   })
 }
 </script>
