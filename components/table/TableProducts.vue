@@ -11,6 +11,9 @@
       <v-card-text>
         <TableProductsAll />
       </v-card-text>
+      <v-card-text>
+        <TableProductsRetention />
+      </v-card-text>
     </v-card>
   </div>
 </template>

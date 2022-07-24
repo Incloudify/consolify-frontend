@@ -15,11 +15,12 @@
         </p>
       </v-card-text>
       <v-alert
-      dense
-      type="error"
-      icon="mdi-alert-octagon-outline"
-      border="left"
-      v-if="TableFundCurrent < 0"
+        v-if="TableFundCurrent < 0"
+        dense
+        type="error"
+        icon="mdi-alert-octagon-outline"
+        class="v-alert-arrearage"
+        border="left"
       >
         你的账户发生欠费, 请尽快补齐款项, 否则你的账户及名下资产将在 <strong>{{ deletionRemainDays }} 日后被删除</strong>
       </v-alert>
@@ -45,7 +46,7 @@ export default {
 }
 </script>
 <style>
-.v-alert{
+.v-alert-arrearage{
   font-size: 7px;
   border-radius: 0px !important;
 }

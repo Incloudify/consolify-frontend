@@ -1,4 +1,4 @@
-<!-- 工作台概览 产品卡片 -->
+<!-- 工作台概览 热门产品卡片 -->
 <template>
   <div>
     <!-- 公告行 开始 -->
@@ -14,15 +14,15 @@
     <div
       class="text-h6"
     >
-      保有产品
+      热门产品
     </div>
     <!-- 产品标题 结束 -->
     <!-- 产品行 开始 -->
     <v-row>
-      <div v-for="products in productsInfo.products" :key="products.key" class="products-div">
-        <v-col v-if="products.retention">
+      <div v-for="products in recommendProductsInfo.products" :key="products.key" class="products-div">
+        <v-col>
           <v-btn class="productbtn">
-            {{ products.productName }} ({{ products.retentionCount }})
+            {{ products.productName }}
           </v-btn>
         </v-col>
       </div>
@@ -37,49 +37,35 @@ export default {
     tableFundCurrent: 0,
     announcement: '近日行云因遭大流量攻击, 产品运行可能不稳定。',
     announcementLevel: 'warning',
-    productsInfo: {
+    recommendProductsInfo: {
       products: [
         {
           key: 1,
-          productName: '云服务器',
-          retention: true,
-          retentionCount: 2
+          productName: '甜甜花酿鸡'
         },
         {
           key: 2,
-          productName: 'MCSM面板服',
-          retention: true,
-          retentionCount: 114
+          productName: 'MCSM面板服'
         },
         {
           key: 3,
-          productName: '轻量应用服务器',
-          retention: false,
-          retentionCount: -1
+          productName: '轻量应用服务器'
         },
         {
           key: 4,
-          productName: '虚拟主机',
-          retention: true,
-          retentionCount: 1
+          productName: '云服务器'
         },
         {
           key: 5,
-          productName: '提瓦特桌面',
-          retention: false,
-          retentionCount: -1
+          productName: '提瓦特桌面'
         },
         {
           key: 6,
-          productName: '甜甜花酿鸡',
-          retention: true,
-          retentionCount: 128
+          productName: '虚拟主机'
         },
         {
           key: 7,
-          productName: '蒙德土豆饼',
-          retention: true,
-          retentionCount: 4
+          productName: '蒙德土豆饼'
         }
       ]
     }
