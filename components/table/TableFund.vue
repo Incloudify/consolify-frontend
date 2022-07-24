@@ -20,7 +20,7 @@
         type="error"
         icon="mdi-alert-octagon-outline"
         class="v-alert-arrearage"
-        border="left"
+        style="background-color: rgba(255, 127, 127) !important;"
       >
         你的账户发生欠费, 请尽快补齐款项, 否则你的账户及名下资产将在 <strong>{{ deletionRemainDays }} 日后被删除</strong>
       </v-alert>
@@ -48,6 +48,6 @@ export default {
 <style>
 .v-alert-arrearage{
   font-size: 7px;
-  border-radius: 0px !important;
+  margin: 0 4px;
 }
 </style>
