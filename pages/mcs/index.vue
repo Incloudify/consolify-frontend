@@ -19,7 +19,7 @@
         <v-row>
           <!-- 卡片左列 -->
           <v-col
-            cols="8"
+            cols="5"
           >
             <v-row>
               <v-btn text>
@@ -45,6 +45,17 @@
                 我的快照({{ OwnedSnapshotMessage }} 个)
               </v-btn>
             </v-row>
+            <v-row>
+              <v-btn color="primary">
+                <v-icon>
+                  mdi-plus-circle
+                </v-icon>
+                新建实例
+              </v-btn>
+              <v-btn>
+                管理实例
+              </v-btn>
+            </v-row>
           </v-col>
           <!-- 卡片右列 -->
           <v-col>
@@ -63,18 +74,6 @@
           </v-col>
         </v-row>
       </v-card-text>
-      <!-- 卡片操作 -->
-      <v-card-actions>
-        <v-btn color="primary">
-          <v-icon>
-            mdi-plus-circle
-          </v-icon>
-          新建实例
-        </v-btn>
-        <v-btn>
-          管理实例
-        </v-btn>
-      </v-card-actions>
     </v-card>
     <!-- 总览卡片 结束 -->
   </div>
@@ -84,6 +83,7 @@
 export default {
   name: 'MCSMIndex',
   title: '概览',
+  layout: 'mcs',
   data: () => ({
     OwnedProductsMessage: '14',
     OwnedProductsRunningMessage: '54',
