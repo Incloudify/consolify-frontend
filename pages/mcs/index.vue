@@ -82,13 +82,15 @@
 <script>
 export default {
   name: 'MCSMIndex',
-  title: '概览',
   layout: 'mcs',
   data: () => ({
     OwnedProductsMessage: '14',
     OwnedProductsRunningMessage: '54',
     OwnedDisksMessage: '19',
     OwnedSnapshotMessage: '8'
+  }),
+  head: () => ({
+    title: '概览 - MineCraft 服务器'
   })
 }
 </script>

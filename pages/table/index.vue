@@ -11,10 +11,8 @@
 <script>
 export default {
   name: 'IndexPage',
-  head () {
-    return {
-      title: '首页'
-    }
-  }
+  head: () => ({
+    title: '概览 - 工作台'
+  })
 }
 </script>

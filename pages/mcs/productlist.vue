@@ -58,6 +58,9 @@ export default {
     OwnedProductsRunningMessage: '54',
     OwnedDisksMessage: '19',
     OwnedSnapshotMessage: '8'
+  }),
+  head: () => ({
+    title: '实例列表 - MineCraft 服务器'
   })
 }
 </script>

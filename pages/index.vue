@@ -5,10 +5,8 @@
 <script>
 export default {
   name: 'IndexPage',
-  head () {
-    return {
-      title: '首页'
-    }
-  }
+  head: () => ({
+    title: '首页'
+  })
 }
 </script>
