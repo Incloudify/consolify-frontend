@@ -1,6 +1,7 @@
 <!-- 实例详情页 传入id -->
 <template>
   <div>
+    <!-- 顶部工具条 开始 -->
     <v-toolbar dense>
       <v-btn icon>
         <v-icon>
@@ -154,6 +155,59 @@
         </v-list>
       </v-menu>
     </v-toolbar>
+    <!-- 顶部工具条 结束 -->
+    <v-tabs>
+      <!-- 标签页 开始 -->
+      <v-tab
+        href="#home"
+      >
+        <v-icon>
+          mdi-home-variant-outline
+        </v-icon>
+        概览
+      </v-tab>
+      <v-tab>
+        <v-icon>
+          mdi-shield-alert-outline
+        </v-icon>
+        防水墙
+      </v-tab>
+      <v-tab>
+        <v-icon>
+          mdi-camera-outline
+        </v-icon>
+        快照
+      </v-tab>
+      <v-tab>
+        <v-icon>
+          mdi-finance
+        </v-icon>
+        状态
+      </v-tab>
+      <!-- 标签页 结束 -->
+      <!-- 标签内容 开始 -->
+      <!-- 总览 -->
+      <v-tab-item
+        value="home"
+      >
+        <v-row>
+          <v-col>
+            <v-card>
+              <v-card-title>
+                <v-icon>
+                  mdi-information-outline
+                </v-icon>
+                主机信息
+              </v-card-title>
+              <v-card-text>
+                Foo Bar
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-tab-item>
+      <!-- 标签内容 结束 -->
+    </v-tabs>
   </div>
 </template>
 
