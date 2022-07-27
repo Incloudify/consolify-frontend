@@ -1,4 +1,4 @@
-<!-- mcs布局 -->
+<!-- cdn布局 -->
 <template>
   <v-app>
     <AppBar />
