@@ -6,45 +6,26 @@
       <v-container>
         <v-row>
           <v-col sm="2">
-            <v-list rounded>
-              <v-subheader>
-                内容分发网络
-              </v-subheader>
-              <v-list-item-group>
-                <v-list-item>
-                  <v-list-item-icon>
-                    <v-icon>
-                      mdi-home
-                    </v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    概览
-                  </v-list-item-content>
-                </v-list-item>
-                <!---->
-                <v-list-item>
-                  <v-list-item-icon>
-                    <v-icon>
-                      mdi-access-point
-                    </v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    域名列表
-                  </v-list-item-content>
-                </v-list-item>
-                <!---->
-                <v-list-item>
-                  <v-list-item-icon>
-                    <v-icon>
-                      mdi-alert-octagram
-                    </v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    告警服务
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
+            <v-tabs vertical optional>
+              <v-tab
+                to="/cdn"
+              >
+                <v-icon>mdi-home</v-icon>
+                产品概览
+              </v-tab>
+              <v-tab
+                to="/cdn/domains"
+              >
+                <v-icon>mdi-access-point</v-icon>
+                域名列表
+              </v-tab>
+              <v-tab
+                to="/cdn/alarm"
+              >
+                <v-icon>mdi-alert-octagram</v-icon>
+                告警管理
+              </v-tab>
+            </v-tabs>
           </v-col>
           <v-col>
             <Nuxt />
