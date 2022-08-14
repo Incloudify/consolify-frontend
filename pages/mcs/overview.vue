@@ -34,7 +34,7 @@
                 <v-icon>
                   mdi-harddisk
                 </v-icon>
-                数据盘列表({{ OwnedDisksMessage }} 单位CED)
+                数据盘列表({{ OwnedDisksMessage }} 单位ATE)
               </v-btn>
             </v-row>
             <v-row>
