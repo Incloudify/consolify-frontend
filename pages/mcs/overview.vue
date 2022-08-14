@@ -48,9 +48,9 @@
             <v-row>
               <v-btn color="primary">
                 <v-icon>
-                  mdi-plus-circle
+                  mdi-plus-circle-outline
                 </v-icon>
-                新建实例
+                &nbsp;新建实例
               </v-btn>
               <v-btn>
                 管理实例
