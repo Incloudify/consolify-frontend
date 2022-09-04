@@ -1,17 +1,17 @@
 <template>
   <v-app>
     <img src="~/static/incloudify-logo-large.png">
-    <h1>登录到玲行云端控制台</h1>
-    <p>欢迎回来!</p>
-    <AccountLoginForm />
+    <h1>忘记密码</h1>
+    <p>为何抹去回忆&nbsp;&nbsp;&nbsp;——氧化某人</p>
+    <AccountForgotForm />
     <div class="options">
-      <v-btn elevation="0" color="transparent" rounded max-width="100px" to="/account/forgot">
-        忘记密码
+      <v-btn elevation="0" color="transparent" rounded max-width="200px" to="/account/login">
+        我又双叒叕想起来了
       </v-btn>
       <p style="margin-top: 5px">
         &nbsp;|&nbsp;
       </p>
-      <v-btn elevation="0" color="transparent" rounded max-width="100px">
+      <v-btn elevation="0" color="transparent" rounded max-width="100px" to="/account/register">
         注册账户
       </v-btn>
     </div>

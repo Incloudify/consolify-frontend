@@ -6,17 +6,10 @@
       min-width="300px"
     >
       <v-text-field
-        label="用户名或邮箱"
-        hint="大小写A-z, 数字0-9, 下划线_, @, ."
+        label="还记得你的名字吗"
+        placeholder="填写用户名或注册邮箱"
+        hint="你的名字仅包含大小写A-z, 数字0-9, 下划线_, @, ."
         outlined
-      />
-      <v-text-field
-        label="密码"
-        hint="注册时设置的密码"
-        :type="passwdShow ? 'text' : 'password'"
-        :append-icon="passwdShow ? 'mdi-eye' : 'mdi-eye-off'"
-        outlined
-        @click:append="passwdShow = !passwdShow"
       />
       <v-btn
         rounded
@@ -27,7 +20,7 @@
         :disabled="isSubmitting"
         @click="isSubmitting = !isSubmitting"
       >
-        登录
+        开始唤醒
       </v-btn>
     </v-card>
   </div>
@@ -35,10 +28,9 @@
 
 <script>
 export default {
-  name: 'LoginForm',
+  name: 'ForgotForm',
   data: () => ({
-    isSubmitting: false,
-    passwdShow: false
+    isSubmitting: false
   })
 }
 </script>
