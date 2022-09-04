@@ -7,7 +7,7 @@
     <v-app-bar-nav-icon />
     <v-toolbar-title>{{ siteName }}控制台</v-toolbar-title>
     <v-spacer />
-    <v-btn icon>
+    <v-btn icon to="/account">
       <v-icon>mdi-account-circle-outline</v-icon>
     </v-btn>
   </v-app-bar>

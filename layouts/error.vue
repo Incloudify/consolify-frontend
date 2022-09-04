@@ -14,8 +14,7 @@
 
 <script>
 export default {
-  name: 'EmptyLayout',
-  layout: 'empty',
+  name: 'Error',
   props: {
     error: {
       type: Object,
@@ -28,10 +27,8 @@ export default {
     }
   },
   head () {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
-      title
+      title: '发生错误'
     }
   }
 }
