@@ -1,12 +1,10 @@
 <template>
   <div>
     <v-card
-      :loading="submitting === true"
       elevation="0"
       max-width="35%"
       min-width="300px"
     >
-      <br>
       <v-text-field
         label="Username"
         hint="大小写A-z, 数字0-9, 下划线_"
@@ -25,8 +23,8 @@
         block
         elevation="1"
         color="primary"
-        :loading="submitting"
-        @click="submitting = !submitting"
+        :loading="isSubmitting"
+        @click="isSubmitting = !isSubmitting"
       >
         登录
       </v-btn>
@@ -38,7 +36,7 @@
 export default {
   name: 'LoginForm',
   data: () => ({
-    submitting: false,
+    isSubmitting: false,
     passwdShow: false
   })
 }

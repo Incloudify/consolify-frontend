@@ -5,7 +5,9 @@
     app
   >
     <v-app-bar-nav-icon />
-    <v-toolbar-title>{{ siteName }}控制台</v-toolbar-title>
+    <v-toolbar-title @click="replaceToHome">
+      {{ siteName }}控制台
+    </v-toolbar-title>
     <v-spacer />
     <v-btn icon to="/account">
       <v-icon>mdi-account-circle-outline</v-icon>
@@ -17,7 +19,12 @@
 export default {
   data: () => ({
     siteName: '玲行云端'
-  })
+  }),
+  methods: {
+    replaceToHome () {
+      window.location.replace('/table')
+    }
+  }
 }
 </script>
 <style>
