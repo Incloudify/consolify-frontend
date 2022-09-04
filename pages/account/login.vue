@@ -4,9 +4,15 @@
     <h1>登录到玲行云端控制台</h1>
     <AccountLoginForm />
     <div class="options">
-      <v-btn elevation="0" color="transparent" rounded max-width="100px">忘记密码</v-btn>
-      <p style="margin-top: 5px">&nbsp;|&nbsp;</p>
-      <v-btn elevation="0" color="transparent" rounded max-width="100px">注册账户</v-btn>
+      <v-btn elevation="0" color="transparent" rounded max-width="100px">
+        忘记密码
+      </v-btn>
+      <p style="margin-top: 5px">
+        &nbsp;|&nbsp;
+      </p>
+      <v-btn elevation="0" color="transparent" rounded max-width="100px">
+        注册账户
+      </v-btn>
     </div>
   </v-app>
 </template>

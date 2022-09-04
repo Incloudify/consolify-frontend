@@ -24,6 +24,7 @@
         elevation="1"
         color="primary"
         :loading="isSubmitting"
+        :disabled="isSubmitting"
         @click="isSubmitting = !isSubmitting"
       >
         登录
