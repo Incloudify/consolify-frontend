@@ -2,7 +2,7 @@
   <v-app>
     <img src="~/static/incloudify-logo-large.png">
     <h1>忘记密码</h1>
-    <p>为何抹去回忆&nbsp;&nbsp;&nbsp;——氧化某人</p>
+    <p>「最后, 森林会记住一切」&nbsp;&nbsp;&nbsp;——Genshin Impact: Aranyaka</p>
     <AccountForgotForm />
     <div class="options">
       <v-btn elevation="0" color="transparent" rounded max-width="200px" to="/account/login">
