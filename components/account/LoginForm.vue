@@ -24,6 +24,7 @@
         @click:append="passwdShow = !passwdShow"
       />
       <v-btn
+        ref="submitBtn"
         rounded
         block
         elevation="1"
@@ -64,8 +65,13 @@ export default {
   }),
   methods: {
     submit () {
-      this.isSubmitting = !this.isSubmitting
-      this.$refs.infoForm.validate()
+      const validateResult = this.$refs.infoForm.validate()
+      this.$refs.submitBtn.$el.style = ''
+      if (validateResult === true) {
+        this.isSubmitting = !this.isSubmitting
+      } else {
+        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+      }
     }
   }
 }
