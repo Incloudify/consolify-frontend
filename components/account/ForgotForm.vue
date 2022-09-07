@@ -14,9 +14,9 @@
         outlined
       />
       <v-btn
+        ref="submitBtn"
         rounded
         block
-        ref="submitBtn"
         elevation="1"
         color="primary"
         :loading="isSubmitting"
