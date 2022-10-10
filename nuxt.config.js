@@ -46,6 +46,7 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeshake: true,
     theme: {
       dark: false,
       themes: {
@@ -70,5 +71,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  loading: {
+    color: 'rgba(33, 150, 243)'
+  },
+  pageTransition: {
+    name: 'scroll-x-transition',
+    mode: 'out-in'
   }
 }
