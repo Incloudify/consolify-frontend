@@ -1,69 +1,53 @@
-# consolify-frontend
+# Consolify
 
-## Build Setup
+------
 
-```bash
-# install dependencies
-$ yarn install
+**一个基于Nuxt与Vuetify的云服务IDC控制台**
 
-# serve with hot reload at localhost:3000
-$ yarn dev
+此项目依然处于开发状态, 欢迎您成为本项目的贡献者。但在提交Pull Request前, 请先仔细阅读 [提交代码规范](javascript:;)。
 
-# build for production and launch server
-$ yarn build
-$ yarn start
+### 当前已完成功能
 
-# generate static project
-$ yarn generate
+------
+
+***注:** 后端需自行适配接入*
+
+- 概览页
+- 账户登录/注册/忘记密码页
+- 内容分发网络管理页
+- 容器云管理页
+
+### 快速开始
+
+------
+
+***注:** 若在操作过程中遇到困难, 可加入 [QQ群聊](https://jq.qq.com/?_wv=1027&k=ISEDwdTh) 寻求帮助*
+
+#### 设备环境需求
+
+- Yarn
+
+#### 启动开发构建
+
+`````
+# 安装依赖项
+[consolify@localhost ~/consolify-frontend] $ yarn install
+# 启动开发构建
+[consolify@localhost ~/consolify-frontend] $ yarn dev
+`````
+
+#### 启动生产构建
+
+```
+# 安装依赖项
+[consolify@localhost ~/consolify-frontend] $ yarn install
+# 构建所需文件
+[consolify@localhost ~/consolify-frontend] $ yarn build
+# 启动生产构建
+[consolify@localhost ~/consolify-frontend] $ yarn start
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+在启动完成后, 你将可以在 [http://localhost:3000](http://localhost:3000) 看到页面
 
-## Special Directories
+如需更多相关帮助, 请查阅 [Wiki](https://github.com/Incloudify/consolify-frontend/wiki)
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
