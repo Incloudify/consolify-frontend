@@ -47,5 +47,7 @@
 [consolify@localhost ~/consolify-frontend] $ yarn start
 ```
 
+在启动完成后, 你将可以在 [http://localhost:3000](http://localhost:3000) 看到页面
+
 如需更多相关帮助, 请查阅 [Wiki](https://github.com/Incloudify/consolify-frontend/wiki)
 
