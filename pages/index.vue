@@ -23,18 +23,16 @@ export default {
     validateSession () {
       const cookie = document.cookie.split(';')
       const sessionId = this.getCookieValue(cookie, 'sessionId')
-      // Send Cookie Value to the backend for validating
       let validateResult = false
-      if (sessionId === '1AE2BD6716D871278F712A78E78C121120987D1283') {
-        validateResult = true
-      } else {
-        validateResult = false
-      }
-      if (!validateResult) {
-        window.location.replace('/account/login')
-      } else {
-        window.location.replace('/table')
-      }
+      this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"sessionId": "' + sessionId + '"}')
+        .then((data) => {
+          validateResult = data.data.code
+          if (validateResult === -1000) {
+            window.location.replace('/table')
+          } else if (validateResult === -1001) {
+            window.location.replace('/account/login')
+          }
+        })
     }
   }
 }
