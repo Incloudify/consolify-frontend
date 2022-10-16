@@ -63,6 +63,9 @@ export default {
       value => !!value || '这个更不可以空着了'
     ]
   }),
+  mounted () {
+    this.validateSession()
+  },
   methods: {
     submit () {
       const validateResult = this.$refs.infoForm.validate()
@@ -97,9 +100,6 @@ export default {
         window.location.replace('/account/settings')
       }
     }
-  },
-  mounted () {
-    this.validateSession()
   }
 }
 </script>

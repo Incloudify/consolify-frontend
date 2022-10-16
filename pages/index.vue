@@ -8,6 +8,9 @@ export default {
   head: () => ({
     title: '首页'
   }),
+  mounted () {
+    this.validateSession()
+  },
   methods: {
     getCookieValue (cookie, cookieName) {
       for (let i = 0; i < cookie.length; i++) {
@@ -33,9 +36,6 @@ export default {
         window.location.replace('/table')
       }
     }
-  },
-  mounted () {
-    this.validateSession()
   }
 }
 </script>
