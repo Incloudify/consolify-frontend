@@ -40,8 +40,10 @@
 </template>
 
 <script>
+import sessionUtils from '~/utils/SessionUtils.vue'
 export default {
   name: 'LoginForm',
+  mixins: [sessionUtils],
   data: () => ({
     isSubmitting: false,
     passwdShow: false,
@@ -64,7 +66,7 @@ export default {
     ]
   }),
   mounted () {
-    this.validateSession()
+    this.reverseValidateSession('/account/settings')
   },
   methods: {
     submit () {
@@ -77,28 +79,6 @@ export default {
       }
       const sessionId = '1AE2BD6716D871278F712A78E78C121120987D1283'
       document.cookie += 'sessionId=' + sessionId + ';'
-    },
-    getCookieValue (cookie, cookieName) {
-      for (let i = 0; i < cookie.length; i++) {
-        const splitedData = cookie[i].split('=')
-        if (splitedData[0] === cookieName) {
-          return splitedData[1]
-        }
-      }
-    },
-    validateSession () {
-      const cookie = document.cookie.split(';')
-      const sessionId = this.getCookieValue(cookie, 'sessionId')
-      // Send Cookie Value to the backend for validating
-      let validateResult = false
-      if (sessionId === '1AE2BD6716D871278F712A78E78C121120987D1283') {
-        validateResult = true
-      } else {
-        validateResult = false
-      }
-      if (validateResult) {
-        window.location.replace('/account/settings')
-      }
     }
   }
 }
