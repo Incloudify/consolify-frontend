@@ -7,18 +7,27 @@
     >
       <v-text-field
         ref="usrField"
+        v-model="usernameData"
         label="用户名或邮箱"
         hint="大小写A-z, 数字0-9, 下划线_, @, ."
         :rules="userNameRule"
+        :error="usernameErr"
+        :error-count="usrErrCount"
+        :error-messages="usrErrMsg"
         maxlength="35"
         outlined
       />
       <v-text-field
+        ref="pwdField"
+        v-model="originPassword"
         label="密码"
         hint="注册时设置的密码"
         :type="passwdShow ? 'text' : 'password'"
         :append-icon="passwdShow ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRule"
+        :error="passwordErr"
+        :error-count="pwdErrCount"
+        :error-messages="pwdErrMsg"
         maxlength="128"
         outlined
         @click:append="passwdShow = !passwdShow"
@@ -41,12 +50,21 @@
 
 <script>
 import sessionUtils from '~/utils/SessionUtils.vue'
+import httpUtils from '~/utils/HttpUtils.vue'
 export default {
   name: 'LoginForm',
-  mixins: [sessionUtils],
+  mixins: [sessionUtils, httpUtils],
   data: () => ({
     isSubmitting: false,
     passwdShow: false,
+    usernameData: '',
+    originPassword: '',
+    usernameErr: false,
+    passwordErr: false,
+    usrErrCount: 0,
+    pwdErrCount: 0,
+    usrErrMsg: '',
+    pwdErrMsg: '',
     userNameRule: [
       value => !!value || '不可以空着',
       (value) => {
@@ -70,6 +88,7 @@ export default {
   },
   methods: {
     submit () {
+      const cryptoInstance = require('crypto')
       const validateResult = this.$refs.infoForm.validate()
       this.$refs.submitBtn.$el.style = ''
       if (validateResult === true) {
@@ -77,8 +96,40 @@ export default {
       } else {
         this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
       }
-      const sessionId = '1AE2BD6716D871278F712A78E78C121120987D1283'
-      document.cookie += 'sessionId=' + sessionId + ';'
+      const usernameData = this.$data.usernameData
+      const originPassword = this.$data.originPassword
+      const saltPassword = 'MiHoMo114514' + originPassword + 'Incloudify1919810HengHengAAA'
+      const md5 = cryptoInstance.createHash('md5')
+      const saltPasswordMD5 = md5.update(saltPassword).digest('hex')
+      this.sendPostToApi('/account/login?apifoxResponseId=110185928', '{"username": "' + usernameData + '", "password": "' + saltPasswordMD5 + '"}', this.reqDataCallback)
+    },
+    reqDataCallback (requestDataReturn) {
+      const cookie = document.cookie.split(';')
+      if (requestDataReturn.code === 1000) {
+        const sessionIdReturn = requestDataReturn.data.sessionId
+        if (sessionIdReturn !== null) {
+          this.editCookieValue(cookie, 'sessionId', sessionIdReturn)
+        }
+      } else if (requestDataReturn.code === 1001) {
+        this.$data.usernameErr = true
+        this.$data.usrErrMsg = '用户名/邮箱不存在'
+        this.$data.usrErrCount = 1
+        this.$data.isSubmitting = false
+        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+      } else if (requestDataReturn.code === 1002) {
+        this.$data.passwordErr = true
+        this.$data.pwdErrMsg = '密码不正确'
+        this.$data.pwdErrCount = 1
+        this.$data.isSubmitting = false
+        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+      } else {
+        this.$data.usernameErr = true
+        this.$data.passwordErr = true
+        this.$data.pwdErrMsg = '发生未知错误, 请重试'
+        this.$data.pwdErrCount = 1
+        this.$data.isSubmitting = false
+        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+      }
     }
   }
 }
