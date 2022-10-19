@@ -17,7 +17,7 @@ export default {
     title: '概览 - 工作台'
   }),
   mounted () {
-    this.validateSession()
+    this.validateSession('/account/login')
   }
 }
 </script>

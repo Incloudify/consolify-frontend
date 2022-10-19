@@ -11,7 +11,7 @@ export default {
     title: '首页'
   }),
   mounted () {
-    this.validateSession()
+    this.validateSession('/account/login')
   }
 }
 </script>
