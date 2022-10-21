@@ -2,9 +2,11 @@
   <v-app>
     <img src="~/static/incloudify-logo-large.png">
     <h1>登录到玲行云端控制台</h1>
-    <p>欢迎回来!</p>
-    <AccountLoginForm />
-    <div class="options">
+    <p ref="welcomeTxt">
+      欢迎回来!
+    </p>
+    <AccountLoginForm class="login-form" @submitSucceed="submitSucceed" />
+    <div ref="optionsTxt" class="options">
       <v-btn elevation="0" color="transparent" rounded max-width="100px" to="/account/forgot">
         忘记密码
       </v-btn>
@@ -19,11 +21,28 @@
 </template>
 
 <script>
+import AccountLoginForm from '~/components/account/LoginForm.vue'
 export default {
   name: 'AccountLoginPage',
+  components: {
+    AccountLoginForm
+  },
+  data: () => ({
+    extContentSeen: true
+  }),
   head: () => ({
     title: '账户登录'
-  })
+  }),
+  methods: {
+    submitSucceed () {
+      this.$refs.welcomeTxt.style = 'opacity: 0;'
+      this.$refs.optionsTxt.style = 'opacity: 0;'
+      setTimeout(() => {
+        this.$refs.welcomeTxt.innerHTML = '&nbsp;'
+        this.$data.extContentSeen = false
+      }, 500)
+    }
+  }
 }
 </script>
 <style>
@@ -38,6 +57,7 @@ p {
   font-weight: 200;
   margin-left: auto;
   margin-right: auto;
+  transition: opacity 0.5s;
 }
 img{
   margin: 5px auto;
@@ -47,5 +67,9 @@ img{
 .options{
   display: flex;
   margin: 10px auto;
+  transition: opacity 0.5s;
+}
+.login-form{
+  transition: all 0.5s;
 }
 </style>

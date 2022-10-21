@@ -13,17 +13,27 @@ export default {
     },
     editCookieValue (cookie, cookieName, targetValue) {
       let cookieStore = ''
+      let cookieWasEdited = 0
       for (let i = 0; i < cookie.length; i++) {
         const splitedData = cookie[i].split('=')
         if (splitedData[0] === cookieName) {
           splitedData[1] = targetValue
+          const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';'
+          cookieStore += newCookieSplited
+          cookieWasEdited = 1
+        } else {
+          const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';'
+          cookieStore += newCookieSplited
         }
-        const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';'
-        cookieStore += newCookieSplited
       }
-      document.cookie = ''
-      document.cookie = cookieStore
-      return true
+      if (cookieWasEdited) {
+        document.cookie = ''
+        document.cookie = cookieStore
+        return true
+      } else {
+        document.cookie += cookieName + '=' + targetValue + ';'
+        return true
+      }
     },
     deleteCookieValue (cookie, cookieName) {
       let cookieStore = ''
