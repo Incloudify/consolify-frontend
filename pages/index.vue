@@ -11,7 +11,10 @@ export default {
     title: '首页'
   }),
   mounted () {
-    this.validateSession('/account/login')
+    const validateSessionF = this.validateSession('/account/login')
+    if (validateSessionF) {
+      window.location.replace('/table')
+    }
   }
 }
 </script>

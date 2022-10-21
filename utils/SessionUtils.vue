@@ -11,19 +11,24 @@ export default {
       }
       return null
     },
-    editCookieValue (cookie, cookieName, targetValue) {
+    editCookieValue (cookie, cookieName, targetValue, expiresTime) {
       let cookieStore = ''
       let cookieWasEdited = 0
       for (let i = 0; i < cookie.length; i++) {
         const splitedData = cookie[i].split('=')
         if (splitedData[0] === cookieName) {
           splitedData[1] = targetValue
-          const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';'
-          cookieStore += newCookieSplited
-          cookieWasEdited = 1
+          if (expiresTime === undefined) {
+            const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';max-age=' + String(24 * 60 * 60) + ';path=/'
+            cookieStore += newCookieSplited
+            cookieWasEdited = 1
+          } else {
+            const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';max-age=' + String(expiresTime) + ';path=/'
+            cookieStore += newCookieSplited
+            cookieWasEdited = 1
+          }
         } else {
-          const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';'
-          cookieStore += newCookieSplited
+          cookieStore += cookie[i]
         }
       }
       if (cookieWasEdited) {
@@ -31,7 +36,11 @@ export default {
         document.cookie = cookieStore
         return true
       } else {
-        document.cookie += cookieName + '=' + targetValue + ';'
+        if (expiresTime === undefined) {
+          document.cookie += cookieName + '=' + targetValue + ';max-age=' + String(24 * 60 * 60) + ';path=/'
+        } else {
+          document.cookie += cookieName + '=' + targetValue + ';max-age=' + String(expiresTime) + ';path=/'
+        }
         return true
       }
     },
@@ -42,7 +51,7 @@ export default {
         if (splitedData[0] === cookieName) {
           continue
         } else {
-          cookieStore += splitedData[0] + '=' + splitedData[1] + ';'
+          cookieStore += cookie[i]
         }
       }
       document.cookie = ''
@@ -54,16 +63,19 @@ export default {
       const sessionId = this.getCookieValue(cookie, 'sessionId')
       if (sessionId !== null) {
         let validateResult = false
-        this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"sessionId": "' + sessionId + '"}')
+        this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"data": {"sessionId": "' + sessionId + '"}, "time": ' + String(Date.now()) + '}')
           .then((data) => {
             validateResult = data.data.code
             if (validateResult === -1001) {
               window.location.replace(targetURI)
               this.deleteCookieValue(cookie, 'sessionId')
+            } else if (validateResult === -1000) {
+              return true
             }
           })
-      } else if (sessionId === null) {
+      } else if (sessionId === null || sessionId === undefined) {
         window.location.replace(targetURI)
+        return false
       }
     },
     reverseValidateSession (targetURI) {
@@ -71,7 +83,7 @@ export default {
       const sessionId = this.getCookieValue(cookie, 'sessionId')
       if (sessionId !== null) {
         let validateResult = false
-        this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"sessionId": "' + sessionId + '"}')
+        this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"data": {"sessionId": "' + sessionId + '"}, "time": ' + String(Date.now()) + '}')
           .then((data) => {
             validateResult = data.data.code
             if (validateResult === -1000) {
