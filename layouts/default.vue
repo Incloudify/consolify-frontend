@@ -16,6 +16,17 @@ export default {
   theme: {
     dark: false
   },
+  watch: {
+    $route: {
+      handler: function () {
+        if (this.$route.path === '/account/login') {
+          this.reverseValidateSessioin('/account/settings')
+        } else {
+          this.validateSession('/account/login', this.pushRouter)
+        }
+      }
+    }
+  },
   mounted () {
     if (this.$route.path === '/account/login') {
       this.reverseValidateSessioin('/account/settings')
