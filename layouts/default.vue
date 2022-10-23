@@ -2,7 +2,8 @@
   <v-app>
     <AppBar />
     <v-main>
-      <Nuxt />
+      <ErrorSnackBar />
+      <Nuxt @showErrSnackBar="showErrSnackBar" />
     </v-main>
   </v-app>
 </template>
@@ -12,6 +13,15 @@ export default {
   transition: 'scroll-x-transition',
   theme: {
     dark: false
+  },
+  methods: {
+    showErrSnackBar (errMsg, timeOut) {
+      this.$children[0].$children[1].$children[0].$data.errSnackBarSeen = true
+      this.$children[0].$children[1].$children[0].$data.errorMsg = errMsg
+      setTimeout(() => {
+        this.$children[0].$children[1].$children[0].$data.errSnackBarSeen = false
+      }, timeOut)
+    }
   }
 }
 </script>

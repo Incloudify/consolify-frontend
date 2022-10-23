@@ -11,14 +11,20 @@ export default {
         })
     },
     sendPostToApi (requestApiURI, objectData, callbackFunc) {
-      // const ipAddr = this.getDeviceIpAddr()
+      const postData = {}
       const ipAddr = '1.14.5.1'
-      const postData = '{"data": ' + objectData + ', "time": ' + String(Date.now()) + ', "originip":' + ipAddr + '}'
+      postData.data = objectData
+      postData.time = String(Date.now())
+      postData.originip = ipAddr
       this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1' + requestApiURI, postData)
         .then((data) => {
-          // console.log(postData)
           const result = data.data
           callbackFunc(result)
+          return true
+        }).catch(() => {
+          const errorObj = {}
+          errorObj.code = -1
+          callbackFunc(errorObj)
         })
     }
   }

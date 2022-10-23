@@ -135,14 +135,16 @@ export default {
       const saltPassword = 'MiHoMo114514' + originPassword + 'Incloudify1919810HengHengAAA'
       const md5 = cryptoInstance.createHash('md5')
       const saltPasswordMD5 = md5.update(saltPassword).digest('hex')
-      this.sendPostToApi('/account/login', '{"username": "' + usernameData + '", "password": "' + saltPasswordMD5 + '"}', this.reqDataCallback)
+      const dataObj = {}
+      dataObj.username = usernameData
+      dataObj.password = saltPasswordMD5
+      this.sendPostToApi('/account/login', dataObj, this.reqDataCallback)
     },
     reqDataCallback (requestDataReturn) {
-      const cookie = document.cookie.split(';')
       if (requestDataReturn.code === 1000) {
         const sessionIdReturn = requestDataReturn.data.sessionId
         if (sessionIdReturn !== null) {
-          this.editCookieValue(cookie, 'sessionId', sessionIdReturn)
+          this.editCookieValue('sessionId', sessionIdReturn)
         }
         this.$data.isSubmitted = true
         setTimeout(() => {
@@ -159,6 +161,14 @@ export default {
       } else if (requestDataReturn.code === 1002) {
         this.$data.passwordErr = true
         this.$data.pwdErrMsg = '密码不正确'
+        this.$data.pwdErrCount = 1
+        this.$data.isSubmitting = false
+        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+        setTimeout(this.clearBtnStyle, 1500)
+      } else if (requestDataReturn.code === -1) {
+        this.$data.usernameErr = true
+        this.$data.passwordErr = true
+        this.$data.pwdErrMsg = '网络错误, 请重试'
         this.$data.pwdErrCount = 1
         this.$data.isSubmitting = false
         this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'

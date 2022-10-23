@@ -11,51 +11,16 @@ export default {
       }
       return null
     },
-    editCookieValue (cookie, cookieName, targetValue, expiresTime) {
-      let cookieStore = ''
-      let cookieWasEdited = 0
-      for (let i = 0; i < cookie.length; i++) {
-        const splitedData = cookie[i].split('=')
-        if (splitedData[0] === cookieName) {
-          splitedData[1] = targetValue
-          if (expiresTime === undefined) {
-            const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';max-age=' + String(24 * 60 * 60) + ';path=/'
-            cookieStore += newCookieSplited
-            cookieWasEdited = 1
-          } else {
-            const newCookieSplited = splitedData[0] + '=' + splitedData[1] + ';max-age=' + String(expiresTime) + ';path=/'
-            cookieStore += newCookieSplited
-            cookieWasEdited = 1
-          }
-        } else {
-          cookieStore += cookie[i]
-        }
-      }
-      if (cookieWasEdited) {
-        document.cookie = ''
-        document.cookie = cookieStore
-        return true
+    editCookieValue (cookieName, targetValue, expiresTime) {
+      if (expiresTime === undefined) {
+        document.cookie = cookieName + '=' + targetValue + ';max-age=' + String(24 * 60 * 60) + ';path=/;'
       } else {
-        if (expiresTime === undefined) {
-          document.cookie += cookieName + '=' + targetValue + ';max-age=' + String(24 * 60 * 60) + ';path=/'
-        } else {
-          document.cookie += cookieName + '=' + targetValue + ';max-age=' + String(expiresTime) + ';path=/'
-        }
-        return true
+        document.cookie = cookieName + '=' + targetValue + ';max-age=' + String(expiresTime) + ';path=/;'
       }
+      return true
     },
-    deleteCookieValue (cookie, cookieName) {
-      let cookieStore = ''
-      for (let i = 0; i < cookie.length; i++) {
-        const splitedData = cookie[i].split('=')
-        if (splitedData[0] === cookieName) {
-          continue
-        } else {
-          cookieStore += cookie[i]
-        }
-      }
-      document.cookie = ''
-      document.cookie = cookieStore
+    deleteCookieValue (cookieName) {
+      document.cookie = cookieName + '=;max-age=0;path=/;'
       return true
     },
     validateSession (targetURI) {
@@ -68,10 +33,16 @@ export default {
             validateResult = data.data.code
             if (validateResult === -1001) {
               window.location.replace(targetURI)
-              this.deleteCookieValue(cookie, 'sessionId')
+              this.deleteCookieValue('sessionId')
+              return false
             } else if (validateResult === -1000) {
               return true
             }
+          }).catch(() => {
+            const errorObj = {}
+            errorObj.code = -1
+            this.$root.$children[3].$children[0].$children[1].$children[1].$children[0].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
+            return errorObj
           })
       } else if (sessionId === null || sessionId === undefined) {
         window.location.replace(targetURI)
@@ -88,7 +59,13 @@ export default {
             validateResult = data.data.code
             if (validateResult === -1000) {
               window.location.replace(targetURI)
+              return true
             }
+          }).catch(() => {
+            const errorObj = {}
+            errorObj.code = -1
+            this.$root.$children[3].$children[0].$children[1].$children[1].$children[0].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
+            return errorObj
           })
       }
     }

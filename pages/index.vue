@@ -12,7 +12,7 @@ export default {
   }),
   mounted () {
     const validateSessionF = this.validateSession('/account/login')
-    if (validateSessionF) {
+    if (validateSessionF === true) {
       window.location.replace('/table')
     }
   }
