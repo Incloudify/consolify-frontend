@@ -6,7 +6,9 @@
     right
     color="red accent-2"
   >
-    <v-icon size="22">mdi-alert-circle-outline</v-icon>
+    <v-icon size="22">
+      mdi-alert-circle-outline
+    </v-icon>
     {{ errorMsg }}
   </v-snackbar>
 </template>

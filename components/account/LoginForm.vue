@@ -79,11 +79,11 @@
 </template>
 
 <script>
-import sessionUtils from '~/utils/SessionUtils.vue'
-import httpUtils from '~/utils/HttpUtils.vue'
+import SessionUtils from '~/utils/SessionUtils.vue'
+import HttpUtils from '~/utils/HttpUtils.vue'
 export default {
   name: 'LoginForm',
-  mixins: [sessionUtils, httpUtils],
+  mixins: [SessionUtils, HttpUtils],
   data: () => ({
     isSubmitting: false,
     isSubmitted: false,
@@ -115,9 +115,6 @@ export default {
       value => !!value || '这个更不可以空着了'
     ]
   }),
-  mounted () {
-    this.reverseValidateSession('/account/settings')
-  },
   methods: {
     submit () {
       const cryptoInstance = require('crypto')

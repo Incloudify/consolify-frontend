@@ -20,9 +20,9 @@
 
 <script>
 export default {
-  name: 'AccountLoginPage',
+  name: 'PasswordResetPage',
   head: () => ({
-    title: '账户登录'
+    title: '密码重置'
   })
 }
 </script>

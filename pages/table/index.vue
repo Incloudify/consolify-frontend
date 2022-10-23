@@ -9,15 +9,10 @@
 </template>
 
 <script>
-import sessionUtils from '~/utils/SessionUtils.vue'
 export default {
   name: 'IndexPage',
-  mixins: [sessionUtils],
   head: () => ({
     title: '概览 - 工作台'
-  }),
-  mounted () {
-    this.validateSession('/account/login')
-  }
+  })
 }
 </script>

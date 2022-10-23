@@ -23,7 +23,7 @@ export default {
       document.cookie = cookieName + '=;max-age=0;path=/;'
       return true
     },
-    validateSession (targetURI) {
+    validateSession (targetURI, callbackFunc) {
       const cookie = document.cookie.split(';')
       const sessionId = this.getCookieValue(cookie, 'sessionId')
       if (sessionId !== null) {
@@ -36,12 +36,16 @@ export default {
               this.deleteCookieValue('sessionId')
               return false
             } else if (validateResult === -1000) {
+              if (callbackFunc !== undefined) {
+                callbackFunc(true)
+              }
               return true
             }
           }).catch(() => {
             const errorObj = {}
             errorObj.code = -1
-            this.$root.$children[3].$children[0].$children[1].$children[1].$children[0].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
+            const indexChild = this.$root.$children.length - 1
+            this.$root.$children[indexChild].$children[0].$children[1].$children[1].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
             return errorObj
           })
       } else if (sessionId === null || sessionId === undefined) {
@@ -64,7 +68,8 @@ export default {
           }).catch(() => {
             const errorObj = {}
             errorObj.code = -1
-            this.$root.$children[3].$children[0].$children[1].$children[1].$children[0].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
+            const indexChild = this.$root.$children.length - 1
+            this.$root.$children[indexChild].$children[0].$children[1].$children[1].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
             return errorObj
           })
       }
