@@ -5,7 +5,7 @@
     <p ref="welcomeTxt">
       欢迎回来!
     </p>
-    <AccountLoginForm class="login-form" @submitSucceed="submitSucceed" />
+    <AccountLoginForm @submitSucceed="submitSucceed" />
     <div ref="optionsTxt" class="options">
       <v-btn elevation="0" color="transparent" rounded max-width="100px" to="/account/forgot">
         忘记密码
@@ -13,7 +13,7 @@
       <p style="margin-top: 5px">
         &nbsp;|&nbsp;
       </p>
-      <v-btn elevation="0" color="transparent" rounded max-width="100px">
+      <v-btn elevation="0" color="transparent" rounded max-width="100px" to="/account/register">
         注册账户
       </v-btn>
     </div>
@@ -32,6 +32,7 @@ export default {
       this.$refs.optionsTxt.style = 'opacity: 0;'
       setTimeout(() => {
         this.$refs.welcomeTxt.innerHTML = '&nbsp;'
+        this.$refs.optionsTxt.innerHTML = '&nbsp;'
         this.$parent.$emit('showSnackBar', 'success', '登录成功', 3000, true)
       }, 500)
     }
@@ -61,8 +62,5 @@ img{
   display: flex;
   margin: 10px auto;
   transition: opacity 0.5s;
-}
-.login-form{
-  transition: all 0.5s;
 }
 </style>

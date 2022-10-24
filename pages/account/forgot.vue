@@ -28,6 +28,7 @@ export default {
     submitSucceed () {
       this.$refs.optionsTxt.style = 'opacity: 0;'
       setTimeout(() => {
+        this.$refs.optionsTxt.style = 'opacity: 0; display: none;'
         this.$parent.$emit('showSnackBar', 'success', '密码重置邮件已发送', 3000, true)
       }, 500)
     }
