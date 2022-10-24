@@ -19,8 +19,8 @@ export default {
   watch: {
     $route: {
       handler: function () {
-        if (this.$route.path === '/account/login') {
-          this.reverseValidateSessioin('/account/settings')
+        if (this.$route.path === '/account/login' || this.$route.path === '/account/forgot' || this.$route.path === '/account/register') {
+          this.reverseValidateSession('/account/settings')
         } else {
           this.validateSession('/account/login', this.pushRouter)
         }
@@ -28,7 +28,7 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.path === '/account/login') {
+    if (this.$route.path === '/account/login' || this.$route.path === '/account/forgot' || this.$route.path === '/account/register') {
       this.reverseValidateSession('/account/settings')
     } else {
       this.validateSession('/account/login', this.pushRouter)
