@@ -21,15 +21,8 @@
 </template>
 
 <script>
-import AccountLoginForm from '~/components/account/LoginForm.vue'
 export default {
   name: 'AccountLoginPage',
-  components: {
-    AccountLoginForm
-  },
-  data: () => ({
-    extContentSeen: true
-  }),
   head: () => ({
     title: '账户登录'
   }),
@@ -39,7 +32,6 @@ export default {
       this.$refs.optionsTxt.style = 'opacity: 0;'
       setTimeout(() => {
         this.$refs.welcomeTxt.innerHTML = '&nbsp;'
-        this.$data.extContentSeen = false
         this.$parent.$emit('showSnackBar', 'success', '登录成功', 3000, true)
       }, 500)
     }

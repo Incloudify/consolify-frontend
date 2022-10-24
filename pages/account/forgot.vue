@@ -3,8 +3,8 @@
     <img src="~/static/incloudify-logo-large.png">
     <h1>忘记密码</h1>
     <p>「最后, 森林会记住一切」</p>
-    <AccountForgotForm />
-    <div class="options">
+    <AccountForgotForm @submitSucceed="submitSucceed" />
+    <div ref="optionsTxt" class="options">
       <v-btn elevation="0" color="transparent" rounded max-width="200px" to="/account/login">
         我又双叒叕想起来了
       </v-btn>
@@ -23,7 +23,15 @@ export default {
   name: 'PasswordResetPage',
   head: () => ({
     title: '密码重置'
-  })
+  }),
+  methods: {
+    submitSucceed () {
+      this.$refs.optionsTxt.style = 'opacity: 0;'
+      setTimeout(() => {
+        this.$parent.$emit('showSnackBar', 'success', '密码重置邮件已发送', 3000, true)
+      }, 500)
+    }
+  }
 }
 </script>
 <style>
@@ -47,5 +55,6 @@ img{
 .options{
   display: flex;
   margin: 10px auto;
+  transition: all 0.5s;
 }
 </style>
