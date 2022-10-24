@@ -44,8 +44,7 @@ export default {
           }).catch(() => {
             const errorObj = {}
             errorObj.code = -1
-            const indexChild = this.$root.$children.length - 1
-            this.$root.$children[indexChild].$children[0].$children[1].$children[1].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
+            this.showSnackBar('error', '网络连接超时, 请检查网络状态', 10000)
             return errorObj
           })
       } else if (sessionId === null || sessionId === undefined) {
@@ -68,8 +67,7 @@ export default {
           }).catch(() => {
             const errorObj = {}
             errorObj.code = -1
-            const indexChild = this.$root.$children.length - 1
-            this.$root.$children[indexChild].$children[0].$children[1].$children[1].$emit('showErrSnackBar', '网络连接超时, 请检查网络状态', 10000)
+            this.showSnackBar('error', '网络连接超时, 请检查网络状态', 10000)
             return errorObj
           })
       }

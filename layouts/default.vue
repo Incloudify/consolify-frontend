@@ -2,8 +2,8 @@
   <v-app>
     <AppBar />
     <v-main>
-      <ErrorSnackBar />
-      <Nuxt @showErrSnackBar="showErrSnackBar" />
+      <SnackBar ref="SnackBar" />
+      <Nuxt @showSnackBar="showSnackBar" />
     </v-main>
   </v-app>
 </template>
@@ -35,11 +35,24 @@ export default {
     }
   },
   methods: {
-    showErrSnackBar (errMsg, timeOut) {
-      this.$children[0].$children[1].$children[0].$data.errSnackBarSeen = true
-      this.$children[0].$children[1].$children[0].$data.errorMsg = errMsg
+    showSnackBar (type, notifyMsg, timeOut) {
+      if (type === 'success') {
+        this.$refs.SnackBar.$data.notifyIcon = 'mdi-check-circle-outline'
+        this.$refs.SnackBar.$data.notifyBgColor = 'rgba(76, 175, 80)'
+      } else if (type === 'warning') {
+        this.$refs.SnackBar.$data.notifyIcon = 'mdi-alert-outline'
+        this.$refs.SnackBar.$data.notifyBgColor = 'rgba(251, 140, 0)'
+      } else if (type === 'error') {
+        this.$refs.SnackBar.$data.notifyIcon = 'mdi-alert-octagon-outline'
+        this.$refs.SnackBar.$data.notifyBgColor = 'rgba(255, 82, 82)'
+      } else if (type === 'unknown') {
+        this.$refs.SnackBar.$data.notifyIcon = 'mdi-help-circle-outline'
+        this.$refs.SnackBar.$data.notifyBgColor = 'rgba(96, 125, 139)'
+      }
+      this.$refs.SnackBar.$data.snackBarSeen = true
+      this.$refs.SnackBar.$data.notifyMsg = notifyMsg
       setTimeout(() => {
-        this.$children[0].$children[1].$children[0].$data.errSnackBarSeen = false
+        this.$refs.SnackBar.$data.snackBarSeen = false
       }, timeOut)
     },
     pushRouter (result) {
