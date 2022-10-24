@@ -4,7 +4,7 @@
 
 **一个基于Nuxt与Vuetify的云服务IDC控制台**
 
-此项目依然处于开发状态, 欢迎您成为本项目的贡献者。但在提交Pull Request前, 请先仔细阅读 [提交代码规范](javascript:;)。
+此项目依然处于开发状态, 欢迎您成为本项目的贡献者。但在提交Pull Request前, 请先仔细阅读 [提交代码规范](https://www.bilibili.com/video/BV1GJ411x7h7)。
 
 ### 当前已完成功能
 
