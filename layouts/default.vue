@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    showSnackBar (type, notifyMsg, timeOut) {
+    showSnackBar (type, notifyMsg, timeOut, notifyClosable) {
       if (type === 'success') {
         this.$refs.SnackBar.$data.notifyIcon = 'mdi-check-circle-outline'
         this.$refs.SnackBar.$data.notifyBgColor = 'rgba(76, 175, 80)'
@@ -48,6 +48,11 @@ export default {
       } else if (type === 'unknown') {
         this.$refs.SnackBar.$data.notifyIcon = 'mdi-help-circle-outline'
         this.$refs.SnackBar.$data.notifyBgColor = 'rgba(96, 125, 139)'
+      }
+      if (notifyClosable === undefined) {
+        this.$refs.SnackBar.$data.notifyClosable = false
+      } else {
+        this.$refs.SnackBar.$data.notifyClosable = notifyClosable
       }
       this.$refs.SnackBar.$data.snackBarSeen = true
       this.$refs.SnackBar.$data.notifyMsg = notifyMsg

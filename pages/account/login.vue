@@ -40,6 +40,7 @@ export default {
       setTimeout(() => {
         this.$refs.welcomeTxt.innerHTML = '&nbsp;'
         this.$data.extContentSeen = false
+        this.$parent.$emit('showSnackBar', 'success', '登录成功', 3000, true)
       }, 500)
     }
   }
