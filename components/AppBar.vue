@@ -22,7 +22,7 @@ export default {
   }),
   methods: {
     replaceToHome () {
-      window.location.replace('/table')
+      this.$router.push('/table')
     }
   }
 }
