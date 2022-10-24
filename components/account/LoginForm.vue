@@ -163,6 +163,7 @@ export default {
         this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
         setTimeout(this.clearBtnStyle, 1500)
       } else if (requestDataReturn.code === -1) {
+        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '网络错误, 请重试', '5000', true)
         this.$data.usernameErr = true
         this.$data.passwordErr = true
         this.$data.pwdErrMsg = '网络错误, 请重试'
@@ -171,6 +172,7 @@ export default {
         this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
         setTimeout(this.clearBtnStyle, 1500)
       } else {
+        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '发生未知错误, 请重试', '5000', true)
         this.$data.usernameErr = true
         this.$data.passwordErr = true
         this.$data.pwdErrMsg = '发生未知错误, 请重试'
