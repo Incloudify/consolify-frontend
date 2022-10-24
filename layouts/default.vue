@@ -29,7 +29,7 @@ export default {
   },
   mounted () {
     if (this.$route.path === '/account/login') {
-      this.reverseValidateSessioin('/account/settings')
+      this.reverseValidateSession('/account/settings')
     } else {
       this.validateSession('/account/login', this.pushRouter)
     }
