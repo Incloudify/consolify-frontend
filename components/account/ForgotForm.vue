@@ -8,11 +8,11 @@
         lazy-validation
       >
         <v-text-field
+          v-model="usernameData"
           label="还记得你的名字吗"
           placeholder="填写用户名或注册邮箱"
           hint="你的名字仅包含大小写A-z, 数字0-9, 下划线_, @, ."
           maxlength="35"
-          v-model="usernameData"
           :rules="userNameRule"
           outlined
         />

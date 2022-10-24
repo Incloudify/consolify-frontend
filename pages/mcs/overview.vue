@@ -22,7 +22,7 @@
             cols="5"
           >
             <v-row>
-              <v-btn text>
+              <v-btn text to="/mcs/productlist">
                 <v-icon>
                   mdi-server
                 </v-icon>
@@ -30,7 +30,7 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn text>
+              <v-btn text to="/mcs/cedlist">
                 <v-icon>
                   mdi-harddisk
                 </v-icon>
@@ -38,7 +38,7 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn text>
+              <v-btn text to="/mcs/snapshotlist">
                 <v-icon>
                   mdi-content-save
                 </v-icon>
@@ -46,13 +46,14 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn color="primary">
+              <v-btn class="new-instance-btn" color="primary" to="/mcs/create/instance">
                 <v-icon>
                   mdi-plus-circle-outline
                 </v-icon>
                 &nbsp;新建实例
               </v-btn>
-              <v-btn>
+              &nbsp;&nbsp;&nbsp;
+              <v-btn to="/mcs/productlist">
                 管理实例
               </v-btn>
             </v-row>
@@ -61,13 +62,15 @@
           <v-col>
             <v-row>
               <v-col>
-                <v-progress-circular value="20" size="150" width="10">
+                <v-progress-circular rotate="-90" :value="(OwnedProductsRunningMessage / OwnedProductsMessage) * 100" size="150" width="10">
                   实例运行状态
+                  <p><strong style="font-size: 24px;">{{ OwnedProductsRunningMessage }}</strong>/{{ OwnedProductsMessage }}</p>
                 </v-progress-circular>
               </v-col>
               <v-col>
-                <v-progress-circular value="20" size="150" width="10">
+                <v-progress-circular rotate="-90" value="0" size="150" width="10">
                   数据用量
+                  <p><strong style="font-size: 24px;">暂不支持</strong></p>
                 </v-progress-circular>
               </v-col>
             </v-row>
@@ -84,13 +87,22 @@ export default {
   name: 'MCSMOverview',
   layout: 'mcs',
   data: () => ({
-    OwnedProductsMessage: '14',
-    OwnedProductsRunningMessage: '54',
-    OwnedDisksMessage: '19',
-    OwnedSnapshotMessage: '8'
+    OwnedProductsMessage: 54,
+    OwnedProductsRunningMessage: 14,
+    OwnedDisksMessage: 19,
+    OwnedSnapshotMessage: 8
   }),
   head: () => ({
     title: '概览 - MineCraft 服务器'
   })
 }
 </script>
+<style>
+.new-instance-btn{
+  margin-left: 10px;
+}
+.v-progress-circular__info{
+  display: unset;
+  text-align: center;
+}
+</style>
