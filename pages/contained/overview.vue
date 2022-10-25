@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="display-1 text--primary">
-      MineCraft 服务器
+      容器云
     </p>
     <!-- 总览卡片 开始 -->
     <v-card>
@@ -12,7 +12,7 @@
       </v-card-title>
       <v-card-subtitle>
         <span>
-          您的玲行云端 MineCraft 服务器实例总览
+          您的玲行云端容器云实例总览
         </span>
       </v-card-subtitle>
       <v-card-text>
@@ -22,7 +22,7 @@
             cols="5"
           >
             <v-row>
-              <v-btn text to="/mcs/productlist">
+              <v-btn text to="/contained/productlist">
                 <v-icon>
                   mdi-server
                 </v-icon>
@@ -30,7 +30,7 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn text to="/mcs/cedlist">
+              <v-btn text to="/contained/cedlist">
                 <v-icon>
                   mdi-harddisk
                 </v-icon>
@@ -38,7 +38,7 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn text to="/mcs/snapshotlist">
+              <v-btn text to="/contained/snapshotlist">
                 <v-icon>
                   mdi-content-save
                 </v-icon>
@@ -46,14 +46,14 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn class="new-instance-btn" color="primary" to="/mcs/create/instance">
+              <v-btn class="new-instance-btn" color="primary" to="/contained/create/instance">
                 <v-icon>
                   mdi-plus-circle-outline
                 </v-icon>
                 &nbsp;新建实例
               </v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn to="/mcs/productlist">
+              <v-btn to="/contained/productlist">
                 管理实例
               </v-btn>
             </v-row>
@@ -84,8 +84,8 @@
 
 <script>
 export default {
-  name: 'MCSMOverview',
-  layout: 'mcs',
+  name: 'ContainedOverview',
+  layout: 'contained',
   data: () => ({
     OwnedProductsMessage: 54,
     OwnedProductsRunningMessage: 14,
@@ -93,7 +93,7 @@ export default {
     OwnedSnapshotMessage: 8
   }),
   head: () => ({
-    title: '概览 - MineCraft 服务器'
+    title: '概览 - 容器云'
   })
 }
 </script>

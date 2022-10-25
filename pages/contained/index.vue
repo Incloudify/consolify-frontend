@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: 'MCSMIndex',
-  layout: 'mcs',
+  name: 'ContainedIndex',
+  layout: 'contained',
   data: () => ({
     OwnedProductsMessage: '14',
     OwnedProductsRunningMessage: '54',
@@ -13,10 +13,7 @@ export default {
     OwnedSnapshotMessage: '8'
   }),
   head: () => ({
-    title: '概览 - MineCraft 服务器'
-  }),
-  mounted () {
-    window.location.replace('/mcs/overview')
-  }
+    title: '概览 - 容器云'
+  })
 }
 </script>

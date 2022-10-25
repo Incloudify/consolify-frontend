@@ -7,12 +7,13 @@
     <!-- 工具栏 -->
     <v-toolbar>
       <v-toolbar-title>
-        轻松管理 MineCraft 服务器
+        轻松管理容器云
       </v-toolbar-title>
       <v-spacer />
       <v-btn>
         产品文档
       </v-btn>
+      &nbsp;&nbsp;
       <v-btn color="primary">
         创建实例
       </v-btn>
@@ -50,9 +51,9 @@
 
 <script>
 export default {
-  name: 'MCSMIndex',
-  title: '概览',
-  layout: 'mcs',
+  name: 'ContainedIndex',
+  title: '实例列表',
+  layout: 'contained',
   data: () => ({
     OwnedProductsMessage: '14',
     OwnedProductsRunningMessage: '54',
