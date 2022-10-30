@@ -55,7 +55,9 @@
             @click="getRegionBuyInfo(false)"
           >
             {{ subRegion.name }}
-            <v-avatar size="16" color="rgba(231, 64, 50, .8)" class="instance-options-subregion-lable" width="auto" v-if="subRegion.showLable">{{ subRegion.lableContent }}</v-avatar>
+            <v-avatar v-if="subRegion.showLable" size="16" color="rgba(231, 64, 50, .8)" class="instance-options-subregion-lable" width="auto">
+              {{ subRegion.lableContent }}
+            </v-avatar>
           </v-btn>
         </v-btn-toggle>
       </div>
