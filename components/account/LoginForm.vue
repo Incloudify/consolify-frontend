@@ -148,42 +148,45 @@ export default {
           this.$data.transitionPlayed = true
         }, 500)
         this.$emit('submitSucceed')
-      } else if (requestDataReturn.code === 1001) {
-        this.$data.usernameErr = true
-        this.$data.usrErrMsg = '用户名/邮箱不存在'
-        this.$data.usrErrCount = 1
-        this.$data.isSubmitting = false
-        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
-        setTimeout(this.clearBtnStyle, 1500)
-      } else if (requestDataReturn.code === 1002) {
-        this.$data.passwordErr = true
-        this.$data.pwdErrMsg = '密码不正确'
-        this.$data.pwdErrCount = 1
-        this.$data.isSubmitting = false
-        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
-        setTimeout(this.clearBtnStyle, 1500)
+      } else if (requestDataReturn.data.code === 1001 && requestDataReturn.code === 404) {
+        this.showResult(undefined, undefined, true, false, '用户名/邮箱不存在')
+      } else if (requestDataReturn.data.code === 1002 && requestDataReturn.code === 403) {
+        this.showResult(undefined, undefined, false, true, '密码不正确')
+      } else if (requestDataReturn.code === 500) {
+        this.showResult('error', '服务器内部错误, 请重试', true, true, '服务器内部错误, 请重试')
       } else if (requestDataReturn.code === -1) {
-        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '网络错误, 请重试', '5000', true)
-        this.$data.usernameErr = true
-        this.$data.passwordErr = true
-        this.$data.pwdErrMsg = '网络错误, 请重试'
-        this.$data.pwdErrCount = 1
-        this.$data.isSubmitting = false
-        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
-        setTimeout(this.clearBtnStyle, 1500)
+        this.showResult('error', '网络错误, 请重试', true, true, '网络错误, 请重试')
+      } else if (requestDataReturn.code === 0) {
+        this.showResult('error', '发生未知错误, 请重试', true, true, '发生未知错误, 请重试')
       } else {
-        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '发生未知错误, 请重试', '5000', true)
-        this.$data.usernameErr = true
-        this.$data.passwordErr = true
-        this.$data.pwdErrMsg = '发生未知错误, 请重试'
-        this.$data.pwdErrCount = 1
-        this.$data.isSubmitting = false
-        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
-        setTimeout(this.clearBtnStyle, 1500)
+        this.showResult('error', '发生未知错误, 请重试', true, true, '发生未知错误, 请重试')
       }
     },
     clearBtnStyle () {
       this.$refs.submitBtn.$el.style = ''
+    },
+    showResult (snackBarType, snackBarMsg, usrErr, pwdErr, errMsg) {
+      if (snackBarType !== undefined) {
+        this.$parent.$parent.$parent.$emit('showSnackBar', snackBarType, snackBarMsg, '5000', true)
+      }
+      this.$data.usernameErr = usrErr
+      this.$data.passwordErr = pwdErr
+      if (usrErr && pwdErr) {
+        this.$data.pwdErrMsg = errMsg
+        this.$data.usrErrCount = 1
+        this.$data.pwdErrCount = 1
+      } else if (usrErr && !pwdErr) {
+        this.$data.usrErrMsg = errMsg
+        this.$data.usrErrCount = 1
+        this.$data.pwdErrCount = 0
+      } else if (!usrErr && pwdErr) {
+        this.$data.pwdErrMsg = errMsg
+        this.$data.usrErrCount = 0
+        this.$data.pwdErrCount = 1
+      }
+      this.$data.isSubmitting = false
+      this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+      setTimeout(this.clearBtnStyle, 1500)
     }
   }
 }

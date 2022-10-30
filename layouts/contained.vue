@@ -45,6 +45,7 @@ import SessionUtils from '~/utils/SessionUtils.vue'
 export default {
   name: 'ContainedLayout',
   mixins: [SessionUtils],
+  transition: 'scroll-x-transition',
   theme: {
     dark: false
   },
@@ -85,7 +86,7 @@ export default {
       }, timeOut)
     },
     pushRouter (result) {
-      if (result === true && this.$route.path === '/contained') {
+      if (result === true && (this.$route.path === '/contained' || this.$route.path === '/contained/')) {
         this.$router.push('/contained/overview')
       } else if (result === true && (this.$route.path === '/account' || this.$route.path === '/account/')) {
         this.$router.push('/account/settings')
@@ -106,5 +107,14 @@ export default {
   margin-left: 12px;
   min-width: 120px;
   max-width: 220px;
+}
+.scroll-x-transition-active,
+.scroll-x-transition-active {
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+.scroll-x-transition-enter,
+.scroll-x-transition-to {
+  opacity: 0;
+  transform: translate3d(-15px, 0, 0);
 }
 </style>

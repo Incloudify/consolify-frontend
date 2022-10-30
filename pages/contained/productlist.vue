@@ -14,7 +14,7 @@
         产品文档
       </v-btn>
       &nbsp;&nbsp;
-      <v-btn color="primary">
+      <v-btn color="primary" to="./create/instance">
         创建实例
       </v-btn>
     </v-toolbar>

@@ -31,20 +31,35 @@ export default {
         this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"data": {"sessionId": "' + sessionId + '"}, "time": ' + String(Date.now()) + '}')
           .then((data) => {
             validateResult = data.data.code
-            if (validateResult === -1001) {
-              window.location.replace(targetURI)
-              this.deleteCookieValue('sessionId')
-              return false
-            } else if (validateResult === -1000) {
+            if (validateResult === -1000) {
               if (callbackFunc !== undefined) {
                 callbackFunc(true)
               }
               return true
             }
-          }).catch(() => {
+          }).catch((error) => {
             const errorObj = {}
-            errorObj.code = -1
-            this.showSnackBar('error', '网络连接超时, 请检查网络状态', 10000)
+            if (error.message === 'Network Error') {
+              errorObj.code = -1
+              this.showSnackBar('error', '网络连接超时, 请检查网络状态', 10000, false)
+            } else if (error.response !== undefined) {
+              if (error.response.status === 403) {
+                if (error.response.data.code === -1001) {
+                  this.$router.push(targetURI)
+                  this.showSnackBar('error', 'SessionID已过期, 请重新登录', 2500, true)
+                  this.deleteCookieValue('sessionId')
+                  return false
+                } else {
+                  this.showSnackBar('error', '您的请求被拒绝', 3000, false)
+                }
+              } else if (error.response.status === 500) {
+                this.showSnackBar('error', '服务器内部错误, 请稍后重试', 5000, true)
+              } else {
+                this.showSnackBar('error', '发生未知错误 (' + error.response.status + ')', 7000, false)
+              }
+            } else {
+              this.showSnackBar('error', '发生未知错误', 7000, false)
+            }
             return errorObj
           })
       } else if (sessionId === null || sessionId === undefined) {
@@ -64,10 +79,26 @@ export default {
               window.location.replace(targetURI)
               return true
             }
-          }).catch(() => {
+          }).catch((error) => {
             const errorObj = {}
-            errorObj.code = -1
-            this.showSnackBar('error', '网络连接超时, 请检查网络状态', 10000)
+            if (error.message === 'Network Error') {
+              errorObj.code = -1
+              this.showSnackBar('error', '网络连接超时, 请检查网络状态', 10000, false)
+            } else if (error.response !== undefined) {
+              if (error.response.status === 403) {
+                if (error.response.data.code === -1001) {
+                  return false
+                } else {
+                  this.showSnackBar('error', '您的请求被拒绝', 3000, false)
+                }
+              } else if (error.response.status === 500) {
+                this.showSnackBar('error', '服务器内部错误, 请稍后重试', 5000, true)
+              } else {
+                this.showSnackBar('error', '发生未知错误 (' + error.response.status + ')', 7000, false)
+              }
+            } else {
+              this.showSnackBar('error', '发生未知错误', 7000, false)
+            }
             return errorObj
           })
       }

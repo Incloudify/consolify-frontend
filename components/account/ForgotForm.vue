@@ -109,7 +109,7 @@ export default {
           this.$data.transitionPlayed = true
         }, 500)
         this.$emit('submitSucceed')
-      } else if (requestDataReturn.code === 1021) {
+      } else if (requestDataReturn.data.code === 1021 && requestDataReturn.code === 404) {
         this.$data.usernameErr = true
         this.$data.usrErrMsg = '用户名/邮箱不存在'
         this.$data.usrErrCount = 1

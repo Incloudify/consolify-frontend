@@ -198,7 +198,7 @@ export default {
           this.$data.stepNum = 3
         }, 500)
         this.$emit('submitSucceed')
-      } else if (requestDataReturn.code === 1011) {
+      } else if (requestDataReturn.data.code === 1011 || requestDataReturn.code === 500) {
         this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '服务器内部错误, 请重试', '5000', true)
         this.$data.usernameErr = true
         this.$data.passwordErr = true
@@ -209,7 +209,7 @@ export default {
         setTimeout(() => {
           this.$refs.submitBtn.$el.style = ''
         }, 1500)
-      } else if (requestDataReturn.code === 1012) {
+      } else if (requestDataReturn.data.code === 1012 && requestDataReturn.code === 403) {
         this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '邮箱已被注册', '5000', true)
         this.$data.isSubmitting = false
         this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'

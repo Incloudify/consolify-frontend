@@ -22,7 +22,7 @@
             cols="5"
           >
             <v-row>
-              <v-btn text to="/contained/productlist">
+              <v-btn text to="./productlist">
                 <v-icon>
                   mdi-server
                 </v-icon>
@@ -30,7 +30,7 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn text to="/contained/cedlist">
+              <v-btn text to="./cedlist">
                 <v-icon>
                   mdi-harddisk
                 </v-icon>
@@ -38,7 +38,7 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn text to="/contained/snapshotlist">
+              <v-btn text to="./snapshotlist">
                 <v-icon>
                   mdi-content-save
                 </v-icon>
@@ -46,14 +46,14 @@
               </v-btn>
             </v-row>
             <v-row>
-              <v-btn class="new-instance-btn" color="primary" to="/contained/create/instance">
+              <v-btn class="new-instance-btn" color="primary" to="./create/instance">
                 <v-icon>
                   mdi-plus-circle-outline
                 </v-icon>
                 &nbsp;新建实例
               </v-btn>
               &nbsp;&nbsp;&nbsp;
-              <v-btn to="/contained/productlist">
+              <v-btn to="./productlist">
                 管理实例
               </v-btn>
             </v-row>
