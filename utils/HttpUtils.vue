@@ -49,7 +49,12 @@ export default {
               errorObj.message = '服务不可用, 请稍后再试'
               errorObj.data = error.response.data
             } else {
-              errorObj.code = error.response.status
+              if (error.response.status !== undefined) {
+                errorObj.code = error.response.status
+              } else {
+                errorObj.code = 0
+                errorObj.message = '网络连接异常, 请稍后再试'
+              }
               errorObj.data = error.response.data
             }
           } else {
