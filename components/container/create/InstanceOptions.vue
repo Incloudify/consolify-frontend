@@ -109,7 +109,7 @@
 <script>
 import HttpUtils from '~/utils/HttpUtils.vue'
 export default {
-  name: 'ContainedCreateInstanceOptions',
+  name: 'ContainerCreateInstanceOptions',
   mixins: [HttpUtils],
   data: () => ({
     availableCountry: ['中国', '提瓦特'],

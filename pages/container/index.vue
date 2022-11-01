@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: 'ContainedIndex',
-  layout: 'contained',
+  name: 'ContainerIndex',
+  layout: 'container',
   data: () => ({
     OwnedProductsMessage: '14',
     OwnedProductsRunningMessage: '54',

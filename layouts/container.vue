@@ -52,12 +52,14 @@ export default {
   watch: {
     $route: {
       handler: function () {
-        this.validateSession('/account/login', this.pushRouter)
+        const sessionExist = this.checkIfSessionIdExist()
+        this.pushRouter(sessionExist)
       }
     }
   },
   mounted () {
-    this.validateSession('/account/login', this.pushRouter)
+    const sessionExist = this.checkIfSessionIdExist()
+    this.pushRouter(sessionExist)
   },
   methods: {
     showSnackBar (type, notifyMsg, timeOut, notifyClosable) {
@@ -86,10 +88,8 @@ export default {
       }, timeOut)
     },
     pushRouter (result) {
-      if (result === true && (this.$route.path === '/contained' || this.$route.path === '/contained/')) {
-        this.$router.push('/contained/overview')
-      } else if (result === true && (this.$route.path === '/account' || this.$route.path === '/account/')) {
-        this.$router.push('/account/settings')
+      if (result === true && (this.$route.path === '/container' || this.$route.path === '/container/')) {
+        this.$router.push('/container/overview')
       }
     }
   }

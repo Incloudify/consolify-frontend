@@ -51,9 +51,9 @@
 
 <script>
 export default {
-  name: 'ContainedIndex',
+  name: 'ContainerList',
   title: '实例列表',
-  layout: 'contained',
+  layout: 'container',
   data: () => ({
     OwnedProductsMessage: '14',
     OwnedProductsRunningMessage: '54',

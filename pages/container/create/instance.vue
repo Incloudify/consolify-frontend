@@ -58,20 +58,20 @@
     </v-col>
     <v-col class="main-col">
       <v-slide-x-reverse-transition>
-        <ContainedCreateInstanceOptions v-if="stepNum === 1" />
+        <ContainerCreateInstanceOptions v-if="stepNum === 1" />
       </v-slide-x-reverse-transition>
       <v-slide-x-reverse-transition>
-        <ContainedCreateInstanceInfo v-if="stepNum === 2" />
+        <ContainerCreateInstanceInfo v-if="stepNum === 2" />
       </v-slide-x-reverse-transition>
       <v-slide-x-reverse-transition>
-        <ContainedCreateOptionsConfirm v-if="stepNum === 3" />
+        <ContainerCreateOptionsConfirm v-if="stepNum === 3" />
       </v-slide-x-reverse-transition>
     </v-col>
   </v-app>
 </template>
 <script>
 export default {
-  name: 'CreateContainedCloudInstancePage',
+  name: 'CreateContainerCloudInstancePage',
   layout: 'default',
   data: () => ({
     stepNum: 1

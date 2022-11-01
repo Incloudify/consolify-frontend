@@ -84,8 +84,8 @@
 
 <script>
 export default {
-  name: 'ContainedOverview',
-  layout: 'contained',
+  name: 'ContainerOverview',
+  layout: 'container',
   data: () => ({
     OwnedProductsMessage: 54,
     OwnedProductsRunningMessage: 14,
