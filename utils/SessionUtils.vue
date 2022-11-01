@@ -26,10 +26,13 @@ export default {
     checkIfSessionIdExist (showSnackBar) {
       const cookie = document.cookie.split(';')
       const sessionId = this.getCookieValue(cookie, 'sessionId')
+      const excludeList = ['/account/login', '/account/login/', '/account/register', '/account/register/', '/account/forgot', '/account/forgot/']
       if (sessionId === null) {
-        this.$router.push('/account/login')
-        if (showSnackBar === true || showSnackBar === undefined) {
-          this.showSnackBar('warning', '请登录后继续', 2500, false)
+        if (!excludeList.includes(this.$route.path)) {
+          this.$router.push('/account/login')
+          if (showSnackBar === true || showSnackBar === undefined) {
+            this.showSnackBar('warning', '请登录后继续', 2500, false)
+          }
         }
         return false
       } else {

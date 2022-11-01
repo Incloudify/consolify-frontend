@@ -16,10 +16,13 @@ export default {
   theme: {
     dark: false
   },
+  data: () => ({
+    excludeList: ['/account/login', '/account/login/', '/account/register', '/account/register/', '/account/forgot', '/account/forgot/']
+  }),
   watch: {
     $route: {
       handler: function () {
-        if (this.$route.path === '/account/login' || this.$route.path === '/account/forgot' || this.$route.path === '/account/register') {
+        if (this.$data.excludeList.includes(this.$route.path)) {
           const sessionExist = this.checkIfSessionIdExist()
           if (sessionExist === true) {
             this.$router.push('/account/settings')
@@ -32,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    if (this.$route.path === '/account/login' || this.$route.path === '/account/forgot' || this.$route.path === '/account/register') {
+    if (this.$data.excludeList.includes(this.$route.path)) {
       const sessionExist = this.checkIfSessionIdExist(false)
       if (sessionExist === true) {
         this.$router.push('/account/settings')
