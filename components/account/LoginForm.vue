@@ -135,7 +135,7 @@ export default {
       const dataObj = {}
       dataObj.username = usernameData
       dataObj.password = saltPasswordMD5
-      this.sendPostToApi('/account/login', dataObj, this.reqDataCallback)
+      this.sendPostToApi('/account/login', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
       if (requestDataReturn.code === 1000) {

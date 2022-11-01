@@ -23,6 +23,20 @@ export default {
       document.cookie = cookieName + '=;max-age=0;path=/;'
       return true
     },
+    checkIfSessionIdExist (showSnackBar) {
+      const cookie = document.cookie.split(';')
+      const sessionId = this.getCookieValue(cookie, 'sessionId')
+      if (sessionId === null) {
+        this.$router.push('/account/login')
+        if (showSnackBar === true || showSnackBar === undefined) {
+          this.showSnackBar('warning', '请登录后继续', 2500, false)
+        }
+        return false
+      } else {
+        return true
+      }
+    }
+    /*
     validateSession (targetURI, callbackFunc) {
       const cookie = document.cookie.split(';')
       const sessionId = this.getCookieValue(cookie, 'sessionId')
@@ -103,6 +117,7 @@ export default {
           })
       }
     }
+    */
   }
 }
 </script>

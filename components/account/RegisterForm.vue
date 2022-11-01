@@ -189,7 +189,7 @@ export default {
       const dataObj = {}
       dataObj.email = mailData
       dataObj.password = saltPasswordMD5
-      this.sendPostToApi('/account/register', dataObj, this.reqDataCallback)
+      this.sendPostToApi('/account/register', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
       if (requestDataReturn.code === 1010) {

@@ -20,18 +20,26 @@ export default {
     $route: {
       handler: function () {
         if (this.$route.path === '/account/login' || this.$route.path === '/account/forgot' || this.$route.path === '/account/register') {
-          this.reverseValidateSession('/account/settings')
+          const sessionExist = this.checkIfSessionIdExist()
+          if (sessionExist === true) {
+            this.$router.push('/account/settings')
+          }
         } else {
-          this.validateSession('/account/login', this.pushRouter)
+          const sessionExist = this.checkIfSessionIdExist()
+          this.pushRouter(sessionExist)
         }
       }
     }
   },
   mounted () {
     if (this.$route.path === '/account/login' || this.$route.path === '/account/forgot' || this.$route.path === '/account/register') {
-      this.reverseValidateSession('/account/settings')
+      const sessionExist = this.checkIfSessionIdExist(false)
+      if (sessionExist === true) {
+        this.$router.push('/account/settings')
+      }
     } else {
-      this.validateSession('/account/login', this.pushRouter)
+      const sessionExist = this.checkIfSessionIdExist()
+      this.pushRouter(sessionExist)
     }
   },
   methods: {
@@ -57,7 +65,9 @@ export default {
       this.$refs.SnackBar.$data.snackBarSeen = true
       this.$refs.SnackBar.$data.notifyMsg = notifyMsg
       setTimeout(() => {
-        this.$refs.SnackBar.$data.snackBarSeen = false
+        if (this.$refs.SnackBar.$data.snackBarSeen === true) {
+          this.$refs.SnackBar.$data.snackBarSeen = false
+        }
       }, timeOut)
     },
     pushRouter (result) {
