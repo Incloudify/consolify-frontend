@@ -109,15 +109,17 @@ export default {
           this.$data.transitionPlayed = true
         }, 500)
         this.$emit('submitSucceed')
-      } else if (requestDataReturn.data.code === 1021 && requestDataReturn.code === 404) {
-        this.$data.usernameErr = true
-        this.$data.usrErrMsg = '用户名/邮箱不存在'
-        this.$data.usrErrCount = 1
-        this.$data.isSubmitting = false
-        this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
-        setTimeout(() => {
-          this.$refs.submitBtn.$el.style = ''
-        }, 1500)
+      } else if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
+        if (requestDataReturn.data.code === 1021 && requestDataReturn.code === 404) {
+          this.$data.usernameErr = true
+          this.$data.usrErrMsg = '用户名/邮箱不存在'
+          this.$data.usrErrCount = 1
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        }
       } else if (requestDataReturn.code === -1) {
         this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '网络错误, 请重试', '5000', true)
         this.$data.usernameErr = true

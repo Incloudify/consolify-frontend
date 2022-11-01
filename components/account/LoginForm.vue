@@ -148,10 +148,12 @@ export default {
           this.$data.transitionPlayed = true
         }, 500)
         this.$emit('submitSucceed')
-      } else if (requestDataReturn.data.code === 1001 && requestDataReturn.code === 404) {
-        this.showResult(undefined, undefined, true, false, '用户名/邮箱不存在')
-      } else if (requestDataReturn.data.code === 1002 && requestDataReturn.code === 403) {
-        this.showResult(undefined, undefined, false, true, '密码不正确')
+      } else if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
+        if (requestDataReturn.data.code === 1001 && requestDataReturn.code === 404) {
+          this.showResult(undefined, undefined, true, false, '用户名/邮箱不存在')
+        } else if (requestDataReturn.data.code === 1002 && requestDataReturn.code === 403) {
+          this.showResult(undefined, undefined, false, true, '密码不正确')
+        }
       } else if (requestDataReturn.code === 500) {
         this.showResult('error', '服务器内部错误, 请重试', true, true, '服务器内部错误, 请重试')
       } else if (requestDataReturn.code === -1) {
