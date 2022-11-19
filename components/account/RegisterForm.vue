@@ -211,16 +211,20 @@
         <v-form
         v-if="stepNum === 2"
         ref="personForm"
-        class="persion-form"
+        class="person-form"
         elevation="0"
       >
         <v-select
+          ref="sexSelector"
           :items="sexSelect"
           label="性别"
         />
         <v-select
+          ref="respectSelector"
           :items="respectSelect"
           label="尊称模式"
+          item-value="respectId"
+          item-text="des"
         />
         <v-col style="display: flex; padding: 0;">
           <v-btn
@@ -265,7 +269,11 @@ export default {
   data: () => ({
     e1: 1,
     sexSelect: ['保密', '男', '女', '武装直升机'],
-    respectSelect: ['请尽量使用标准尊称称呼我', '可以尽量使用平易近人的方式称呼我', '使用预设称呼方式...'],
+    respectSelect: [
+      { des: '请尽量使用标准尊称称呼我', hint: '1', respectId: 1 }
+    ],
+    respectGroupSelect: ['溜溜梅'],
+    canRespectGroupSelected: false,
     stepNum: 1,
     passwdShow: false,
     mailData: '',
