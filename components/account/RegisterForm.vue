@@ -218,14 +218,20 @@
           ref="sexSelector"
           :items="sexSelect"
           label="性别"
+          persistent-hint
+          hint="我们会根据您提供的性别选项（如果提供）来为您提供个性化称呼。"
         />
+        <br>
         <v-select
           ref="respectSelector"
           :items="respectSelect"
           label="尊称模式"
           item-value="respectId"
           item-text="des"
+          persistent-hint
+          hint="我们可能根据您选择的尊称模式，在相关消息中对您使用尊敬称呼。"
         />
+        <br>
         <v-col style="display: flex; padding: 0;">
           <v-btn
             id="backwardBtn"
@@ -253,6 +259,31 @@
             注册
           </v-btn>
         </v-col>
+      </v-form>
+      </v-stepper-content>
+      <v-stepper-content step="4">
+        <v-form
+        v-if="stepNum === 3"
+        ref="succeedForm"
+        class="succeed-form"
+        elevation="0"
+      >
+        <v-icon
+          size="120"
+          color="grey darken-2"
+        >
+          mdi-check
+        </v-icon>
+        <p>注册成功</p>
+        <v-btn
+          rounded
+          block
+          elevation="1"
+          color="primary"
+          to="/account/login"
+        >
+          返回登录
+        </v-btn>
       </v-form>
       </v-stepper-content>
     </v-stepper-items>
@@ -356,6 +387,7 @@ export default {
         this.$data.stepNum = 0
         setTimeout(() => {
           this.$data.stepNum = 3
+          this.$data.e1 = 4
         }, 500)
         this.$emit('submitSucceed')
       } if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
