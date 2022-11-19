@@ -1,4 +1,5 @@
 <template>
+  <!--
   <div>
     <v-scroll-x-transition>
       <v-form
@@ -110,6 +111,149 @@
       </v-form>
     </v-scroll-x-transition>
   </div>
+  -->
+  <div>
+    <v-stepper v-model="e1">
+    <v-stepper-header>
+      <v-stepper-step :complete="e1 > 1" step="1">账户信息</v-stepper-step>
+      <v-divider></v-divider>
+      <v-stepper-step :complete="e1 > 2" step="2">安全性</v-stepper-step>
+      <v-divider></v-divider>
+      <v-stepper-step :complete="e1 > 3" step="3">个性化</v-stepper-step>
+      <v-divider></v-divider>
+      <v-stepper-step step="4">完成注册</v-stepper-step>
+    </v-stepper-header>
+
+    <v-stepper-items>
+      <v-stepper-content step="1">
+        <v-form
+        v-if="stepNum === 1"
+        ref="infoForm"
+        elevation="0"
+        lazy-validation
+      >
+        <v-text-field
+          ref="mailField"
+          v-model="mailData"
+          label="邮箱"
+          hint="大小写A-z, 数字0-9, 下划线_, @, ."
+          :rules="mailRule"
+          :error="mailErr"
+          :error-count="mailErrCount"
+          :error-messages="mailErrMsg"
+          maxlength="35"
+          outlined
+        />
+        <v-col style="display: flex; padding: 0;">
+          <v-spacer />
+          <v-btn
+            ref="nextStepBtn"
+            rounded
+            elevation="1"
+            color="primary"
+            @click="setPassword"
+          >
+            下一步
+          </v-btn>
+        </v-col>
+      </v-form>
+      </v-stepper-content>
+
+      <v-stepper-content step="2">
+        <v-form
+        v-if="stepNum === 2"
+        ref="passwdForm"
+        class="passwd-form"
+        elevation="0"
+      >
+        <v-text-field
+          ref="pwdField"
+          v-model="originPassword"
+          label="密码"
+          hint="6-16个字符, 至少包含大写英文字母、小写英文字母、特殊符号、数字中的三种"
+          :type="passwdShow ? 'text' : 'password'"
+          :append-icon="passwdShow ? 'mdi-eye' : 'mdi-eye-off'"
+          :rules="passwordRule"
+          :error="passwordErr"
+          :error-count="pwdErrCount"
+          :error-messages="pwdErrMsg"
+          maxlength="16"
+          outlined
+          @click:append="passwdShow = !passwdShow"
+        />
+        <v-col style="display: flex; padding: 0;">
+          <v-btn
+            id="backwardBtn"
+            ref="backwardBtn"
+            rounded
+            elevation="1"
+            color="primary"
+            :disabled="isSubmitting"
+            @click="backwardToEmail"
+          >
+            上一步
+          </v-btn>
+          <v-spacer />
+          <v-btn
+            ref="nextStepBtn"
+            rounded
+            elevation="1"
+            color="primary"
+            @click="passwordCheck"
+          >
+            下一步
+          </v-btn>
+        </v-col>
+      </v-form>
+      </v-stepper-content>
+
+      <v-stepper-content step="3">
+        <v-form
+        v-if="stepNum === 2"
+        ref="personForm"
+        class="persion-form"
+        elevation="0"
+      >
+        <v-select
+          :items="sexSelect"
+          label="性别"
+        />
+        <v-select
+          :items="respectSelect"
+          label="尊称模式"
+        />
+        <v-col style="display: flex; padding: 0;">
+          <v-btn
+            id="backwardBtn"
+            ref="backwardBtn"
+            rounded
+            elevation="1"
+            color="primary"
+            :disabled="isSubmitting"
+            @click="e1 = 2"
+          >
+            上一步
+          </v-btn>
+          <v-spacer />
+          <v-btn
+            id="submitBtn"
+            ref="submitBtn"
+            rounded
+            right
+            elevation="1"
+            color="primary"
+            :loading="isSubmitting"
+            :disabled="isSubmitting"
+            @click="submit"
+          >
+            注册
+          </v-btn>
+        </v-col>
+      </v-form>
+      </v-stepper-content>
+    </v-stepper-items>
+  </v-stepper>
+  </div>
 </template>
 
 <script>
@@ -119,6 +263,9 @@ export default {
   name: 'LoginForm',
   mixins: [SessionUtils, HttpUtils],
   data: () => ({
+    e1: 1,
+    sexSelect: ['保密', '男', '女', '武装直升机'],
+    respectSelect: ['请尽量使用标准尊称称呼我', '可以尽量使用平易近人的方式称呼我', '使用预设称呼方式...'],
     stepNum: 1,
     passwdShow: false,
     mailData: '',
@@ -148,10 +295,11 @@ export default {
   methods: {
     setPassword () {
       if (this.$refs.infoForm.validate()) {
-        this.$data.stepNum = 0
+        this.$data.stepNum = 1
         this.$emit('processStarted')
         setTimeout(() => {
           this.$data.stepNum = 2
+          this.$data.e1 = 2
         }, 500)
       } else {
         this.$refs.nextStepBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
@@ -166,14 +314,14 @@ export default {
       this.$emit('processBackward')
       setTimeout(() => {
         this.$data.stepNum = 1
+        this.$data.e1 = 1
       }, 500)
     },
-    submit () {
-      const cryptoInstance = require('crypto')
+    passwordCheck () {
       const validateResult = this.$refs.passwdForm.validate()
       this.$refs.submitBtn.$el.style = ''
       if (validateResult === true) {
-        this.isSubmitting = !this.isSubmitting
+        this.$data.e1 = 3
       } else {
         this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
         setTimeout(() => {
@@ -181,6 +329,10 @@ export default {
         }, 1500)
         return false
       }
+    },
+    submit () {
+      const cryptoInstance = require('crypto')
+      this.isSubmitting = !this.isSubmitting
       const mailData = this.$data.mailData
       const originPassword = this.$data.originPassword
       const saltPassword = 'MiHoMo114514' + originPassword + 'Incloudify1919810HengHengAAA'
