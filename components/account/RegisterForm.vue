@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-stepper v-model="e1">
-      <v-stepper-header>
+    <v-stepper v-model="e1" elevation="0">
+      <v-stepper-header class="elevation-0 reg-stepper-header">
         <v-stepper-step :complete="e1 > 1" step="1">
           账户信息
         </v-stepper-step>
@@ -351,5 +351,9 @@ export default {
 .succeed-form p{
   font-size: 22px;
   opacity: .5;
+}
+.reg-stepper-header{
+  margin: 10px auto;
+  max-width: 50%;
 }
 </style>

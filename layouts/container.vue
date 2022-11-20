@@ -8,25 +8,25 @@
         <!-- 概览导航头部 开始 -->
         <v-tabs class="list-tab" vertical optional>
           <v-tab
-            to="/contained/overview"
+            to="/container/overview"
           >
             <v-icon>mdi-home</v-icon>
             产品概览
           </v-tab>
           <v-tab
-            to="/contained/productlist"
+            to="/container/productlist"
           >
             <v-icon>mdi-server</v-icon>
             实例列表
           </v-tab>
           <v-tab
-            to="/contained/cedlist"
+            to="/container/cedlist"
           >
             <v-icon>mdi-harddisk</v-icon>
             CED 列表
           </v-tab>
           <v-tab
-            to="/contained/snapshotlist"
+            to="/container/snapshotlist"
           >
             <v-icon>mdi-content-save</v-icon>
             实例快照
