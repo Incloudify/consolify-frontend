@@ -17,10 +17,7 @@ export default {
       postData.data = objectData
       postData.time = String(Date.now())
       postData.originip = ipAddr
-      if (checkCookie === undefined || checkCookie === true) {
-        postData.sessionid = this.getCookieValue(document.cookie.split(';'), 'sessionId')
-      }
-      this.$axios.post('https://mock.apifox.cn/m1/1340156-0-c34c0a47' + requestApiURI, postData)
+      this.$axios.post('http://cn-hk-b4.luminebox.incloudify.com:24444' + requestApiURI, postData)
         .then((data) => {
           const result = data.data
           result.isError = false
@@ -81,7 +78,7 @@ export default {
         })
     },
     sendGetToApi (requestApiURI, extParam, callbackFunc) {
-      this.$axios.get('https://mock.apifox.cn/m1/1340156-0-c34c0a47' + requestApiURI + '?' + extParam)
+      this.$axios.get('http://cn-hk-b4.luminebox.incloudify.com:24444' + requestApiURI + '?' + extParam)
         .then((data) => {
           const result = data.data
           callbackFunc(result)
