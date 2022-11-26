@@ -20,7 +20,7 @@ export default {
       if (checkCookie === undefined || checkCookie === true) {
         postData.sessionid = this.getCookieValue(document.cookie.split(';'), 'sessionId')
       }
-      this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1' + requestApiURI, postData)
+      this.$axios.post('https://mock.apifox.cn/m1/1340156-0-c34c0a47' + requestApiURI, postData)
         .then((data) => {
           const result = data.data
           result.isError = false
@@ -81,7 +81,7 @@ export default {
         })
     },
     sendGetToApi (requestApiURI, extParam, callbackFunc) {
-      this.$axios.get('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1' + requestApiURI + '?' + extParam)
+      this.$axios.get('https://mock.apifox.cn/m1/1340156-0-c34c0a47' + requestApiURI + '?' + extParam)
         .then((data) => {
           const result = data.data
           callbackFunc(result)
