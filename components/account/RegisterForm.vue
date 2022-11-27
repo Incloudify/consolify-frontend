@@ -125,6 +125,18 @@
               persistent-hint
               hint="我们可能根据您选择的尊称模式，在相关消息中对您使用尊敬称呼。"
             />
+            <v-text-field
+              ref="nickNameField"
+              v-model="nickName"
+              label="用户名"
+              hint="1-16个字符, 大小写A-z, 下划线_, 数字0-9, 中文字符, 横杠-"
+              class="reg-nick-name-field"
+              :rules="nickNameRule"
+              :error="nickNameErr"
+              :error-count="nickNameErrCount"
+              :error-messages="nickNameErrMsg"
+              maxlength="16"
+            />
             <br>
             <v-col style="display: flex; padding: 0;">
               <v-btn
@@ -202,6 +214,7 @@ export default {
     stepNum: 1,
     passwdShow: false,
     mailData: '',
+    nickName: '',
     originPassword: '',
     mailErr: false,
     passwordErr: false,
@@ -209,6 +222,9 @@ export default {
     pwdErrCount: 1,
     mailErrMsg: '',
     pwdErrMsg: '',
+    nickNameErr: false,
+    nickNameErrCount: 1,
+    nickNameErrMsg: '',
     isSubmitting: false,
     mailRule: [
       value => !!value || '不可以空着',
@@ -223,6 +239,17 @@ export default {
     ],
     passwordRule: [
       value => !!value || '你的账户安全至极'
+    ],
+    nickNameRule: [
+      value => !!value || '会被认不出的',
+      (value) => {
+        const nickNamePattern = /[A-Za-z0-9_\-\u4E00-\u9FA5]+/
+        if (nickNamePattern.test(value)) {
+          return true
+        } else {
+          return false || '仔细看看Hint哦 (1-16个字符, 大小写A-z, 下划线_, 数字0-9, 中文字符, 横杠-)'
+        }
+      }
     ]
   }),
   methods: {
@@ -267,6 +294,7 @@ export default {
       const cryptoInstance = require('crypto')
       this.isSubmitting = !this.isSubmitting
       const mailData = this.$data.mailData
+      const nickName = this.$data.nickName
       const originPassword = this.$data.originPassword
       const saltPassword = originPassword + '81262035b6d4babbcfd8fe71892edced'
       const sha512 = cryptoInstance.createHash('sha512')
@@ -274,6 +302,7 @@ export default {
       const dataObj = {}
       dataObj.email = mailData
       dataObj.password = saltPasswordSHA512
+      dataObj.username = nickName
       this.sendPostToApi('/account/register', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
@@ -287,7 +316,7 @@ export default {
       } if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
         if ((requestDataReturn.data.code === 1002 && requestDataReturn.code === 500) || requestDataReturn.code === 500) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '服务器内部错误, 请重试', '5000', true)
-          this.$data.usernameErr = true
+          this.$data.mailErr = true
           this.$data.passwordErr = true
           this.$data.pwdErrMsg = '服务器内部错误, 请重试'
           this.$data.pwdErrCount = 1
@@ -298,6 +327,9 @@ export default {
           }, 1500)
         } else if (requestDataReturn.data.code === 1031 && requestDataReturn.code === 409) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '邮箱已被注册', '5000', true)
+          this.$data.mailErr = true
+          this.$data.mailErrMsg = '邮箱已被注册'
+          this.$data.mailErrCount = 1
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
           setTimeout(() => {
@@ -305,6 +337,9 @@ export default {
           }, 1500)
         } else if (requestDataReturn.data.code === 1030 && requestDataReturn.code === 409) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '用户名已被注册', '5000', true)
+          this.$data.nickNameErr = true
+          this.$data.nickNameErrMsg = '用户名已被注册'
+          this.$data.nickNameErrCount = 1
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
           setTimeout(() => {
@@ -319,6 +354,10 @@ export default {
           }, 1500)
         } else if (requestDataReturn.data.code !== undefined) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '未识别的错误, 请联系系统管理员', '5000', true)
+          this.$data.mailErr = true
+          this.$data.passwordErr = true
+          this.$data.pwdErrMsg = '未识别的错误'
+          this.$data.pwdErrCount = 1
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
           setTimeout(() => {
@@ -326,6 +365,10 @@ export default {
           }, 1500)
         } else {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '发生未知错误, 请重试', '5000', true)
+          this.$data.mailErr = true
+          this.$data.passwordErr = true
+          this.$data.pwdErrMsg = '发生未知错误, 请重试'
+          this.$data.pwdErrCount = 1
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
           setTimeout(() => {
@@ -334,7 +377,7 @@ export default {
         }
       } else if (requestDataReturn.code === -1) {
         this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '网络错误, 请重试', '5000', true)
-        this.$data.usernameErr = true
+        this.$data.mailErr = true
         this.$data.passwordErr = true
         this.$data.pwdErrMsg = '网络错误, 请重试'
         this.$data.pwdErrCount = 1
@@ -345,7 +388,7 @@ export default {
         }, 1500)
       } else {
         this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '发生未知错误, 请重试', '5000', true)
-        this.$data.usernameErr = true
+        this.$data.mailErr = true
         this.$data.passwordErr = true
         this.$data.pwdErrMsg = '发生未知错误, 请重试'
         this.$data.pwdErrCount = 1
@@ -383,5 +426,8 @@ export default {
 .reg-stepper-header{
   margin: 10px auto;
   max-width: 50%;
+}
+.reg-nick-name-field{
+  margin-top: 15px;
 }
 </style>
