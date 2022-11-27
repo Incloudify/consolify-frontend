@@ -103,7 +103,7 @@ export default {
       this.sendPostToApi('/account/forgot', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
-      if (requestDataReturn.code === 1020) {
+      if (requestDataReturn.code === 1000) {
         this.$data.isSubmitted = true
         setTimeout(() => {
           this.$data.transitionPlayed = true
@@ -119,7 +119,7 @@ export default {
           setTimeout(() => {
             this.$refs.submitBtn.$el.style = ''
           }, 1500)
-        } else if (requestDataReturn.data.code === 1022 && requestDataReturn.code === 422) {
+        } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '参数错误, 请联系系统管理员', '5000', true)
           this.$data.usernameErr = true
           this.$data.usrErrMsg = '参数错误'

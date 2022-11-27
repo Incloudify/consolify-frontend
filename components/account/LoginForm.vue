@@ -149,11 +149,11 @@ export default {
         }, 500)
         this.$emit('submitSucceed')
       } else if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
-        if (requestDataReturn.data.code === 1001 && requestDataReturn.code === 404) {
+        if (requestDataReturn.data.code === 1010 && requestDataReturn.code === 404) {
           this.showResult(undefined, undefined, true, false, '用户名/邮箱不存在')
-        } else if (requestDataReturn.data.code === 1002 && requestDataReturn.code === 403) {
+        } else if (requestDataReturn.data.code === 1011 && requestDataReturn.code === 403) {
           this.showResult(undefined, undefined, false, true, '密码不正确')
-        } else if (requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) {
+        } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
           this.showResult('error', '参数错误, 请联系系统管理员', true, true, '参数错误')
         } else if (requestDataReturn.data.code !== undefined) {
           this.showResult('error', '未识别的错误, 请联系系统管理员', true, true, '未识别的错误')

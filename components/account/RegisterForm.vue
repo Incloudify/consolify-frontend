@@ -277,7 +277,7 @@ export default {
       this.sendPostToApi('/account/register', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
-      if (requestDataReturn.code === 1010) {
+      if (requestDataReturn.code === 1000) {
         this.$data.stepNum = 0
         setTimeout(() => {
           this.$data.stepNum = 3
@@ -285,7 +285,7 @@ export default {
         }, 500)
         this.$emit('submitSucceed')
       } if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
-        if (requestDataReturn.data.code === 1011 || requestDataReturn.code === 500) {
+        if ((requestDataReturn.data.code === 1002 && requestDataReturn.code === 500) || requestDataReturn.code === 500) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '服务器内部错误, 请重试', '5000', true)
           this.$data.usernameErr = true
           this.$data.passwordErr = true
@@ -296,14 +296,21 @@ export default {
           setTimeout(() => {
             this.$refs.submitBtn.$el.style = ''
           }, 1500)
-        } else if (requestDataReturn.data.code === 1012 && requestDataReturn.code === 403) {
+        } else if (requestDataReturn.data.code === 1031 && requestDataReturn.code === 409) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '邮箱已被注册', '5000', true)
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
           setTimeout(() => {
             this.$refs.submitBtn.$el.style = ''
           }, 1500)
-        } else if (requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) {
+        } else if (requestDataReturn.data.code === 1030 && requestDataReturn.code === 409) {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '用户名已被注册', '5000', true)
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '参数错误, 请联系系统管理员', '5000', true)
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
