@@ -79,5 +79,21 @@ export default {
   pageTransition: {
     name: 'scroll-x-transition',
     mode: 'out-in'
+  },
+
+  // Axios Configuration
+  axios: {
+    proxy: true
+  },
+
+  // Proxy Configuration
+  proxy: {
+    '/api': {
+      target: 'http://localhost:24444',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': '/'
+      }
+    }
   }
 }

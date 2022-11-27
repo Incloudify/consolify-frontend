@@ -268,12 +268,12 @@ export default {
       this.isSubmitting = !this.isSubmitting
       const mailData = this.$data.mailData
       const originPassword = this.$data.originPassword
-      const saltPassword = 'MiHoMo114514' + originPassword + 'Incloudify1919810HengHengAAA'
-      const md5 = cryptoInstance.createHash('md5')
-      const saltPasswordMD5 = md5.update(saltPassword).digest('hex')
+      const saltPassword = originPassword + '81262035b6d4babbcfd8fe71892edced'
+      const sha512 = cryptoInstance.createHash('sha512')
+      const saltPasswordSHA512 = sha512.update(saltPassword).digest('hex')
       const dataObj = {}
       dataObj.email = mailData
-      dataObj.password = saltPasswordMD5
+      dataObj.password = saltPasswordSHA512
       this.sendPostToApi('/account/register', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
@@ -298,6 +298,27 @@ export default {
           }, 1500)
         } else if (requestDataReturn.data.code === 1012 && requestDataReturn.code === 403) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '邮箱已被注册', '5000', true)
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else if (requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '参数错误, 请联系系统管理员', '5000', true)
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else if (requestDataReturn.data.code !== undefined) {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '未识别的错误, 请联系系统管理员', '5000', true)
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '发生未知错误, 请重试', '5000', true)
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
           setTimeout(() => {

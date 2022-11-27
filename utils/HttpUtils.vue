@@ -17,7 +17,7 @@ export default {
       postData.data = objectData
       postData.time = String(Date.now())
       postData.originip = ipAddr
-      this.$axios.post('http://cn-hk-b4.luminebox.incloudify.com:24444' + requestApiURI, postData)
+      this.$axios.post('/api' + requestApiURI, postData)
         .then((data) => {
           const result = data.data
           result.isError = false
@@ -60,6 +60,10 @@ export default {
               errorObj.code = 503
               errorObj.message = '服务不可用, 请稍后再试'
               errorObj.data = error.response.data
+            } else if (error.response.status === 422) {
+              errorObj.code = 422
+              errorObj.message = '参数错误'
+              errorObj.data = error.response.data
             } else {
               if (error.response.status !== undefined) {
                 errorObj.code = error.response.status
@@ -78,7 +82,7 @@ export default {
         })
     },
     sendGetToApi (requestApiURI, extParam, callbackFunc) {
-      this.$axios.get('http://cn-hk-b4.luminebox.incloudify.com:24444' + requestApiURI + '?' + extParam)
+      this.$axios.get('/api' + requestApiURI + '?' + extParam)
         .then((data) => {
           const result = data.data
           callbackFunc(result)
