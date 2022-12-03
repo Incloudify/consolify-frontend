@@ -248,7 +248,23 @@ export default {
     selectedRegion: 0,
     selectedSubRegion: 0,
     selectedRAM: 40,
-    subRegionNameList: []
+    containerType: [
+      {
+        id: 1,
+        name: 'MCSM面板服',
+        iconSrc: '~/static/container/icons/mcsm.png'
+      },
+      {
+        id: 2,
+        name: 'Pterodactyl面板服',
+        iconSrc: '~/static/container/icons/ptero.png'
+      },
+      {
+        id: 3,
+        name: 'Docker',
+        iconSrc: '~/static/container/icons/docker.png'
+      }
+    ]
   }),
   mounted () {
     this.getGlobalRegionInfo()
