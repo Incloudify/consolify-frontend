@@ -24,7 +24,7 @@ export default {
           const result = data.data
           result.isError = false
           if (checkCookie === undefined || checkCookie === true) {
-            if (result.code === 114) {
+            if (result.code === 3013) {
               this.deleteCookieValue('sessionId')
               this.checkIfSessionIdExist()
             } else {
@@ -88,7 +88,7 @@ export default {
         .then((data) => {
           const result = data.data
           if (checkCookie === undefined || checkCookie === true) {
-            if (result.code === 114) {
+            if (result.code === 3013) {
               this.deleteCookieValue('sessionId')
               this.checkIfSessionIdExist()
             } else {
