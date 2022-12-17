@@ -57,9 +57,6 @@
           <v-form v-if="stepNum === 2" ref="personForm" class="person-form" elevation="0">
             <v-select ref="sexSelector" :items="sexSelect" v-model="sex" label="性别" persistent-hint
               hint="我们会根据您提供的性别选项（如果提供）来为您提供个性化称呼。" />
-            <br>
-            <v-select ref="respectSelector" :items="respectSelect" label="尊称模式" item-value="respectId" item-text="des"
-              persistent-hint hint="我们可能根据您选择的尊称模式，在相关消息中对您使用尊敬称呼。" />
             <v-text-field ref="nickNameField" v-model="nickName" label="用户名"
               hint="1-16个字符, 大小写A-z, 下划线_, 数字0-9, 中文字符, 横杠-" class="reg-nick-name-field" :rules="nickNameRule"
               :error="nickNameErr" :error-count="nickNameErrCount" :error-messages="nickNameErrMsg" maxlength="16" />
@@ -102,9 +99,6 @@ export default {
   data: () => ({
     e1: 1,
     sexSelect: ['保密', '男', '女', '武装直升机', '其他'],
-    respectSelect: [
-      { des: '请尽量使用标准尊称称呼我', hint: '1', respectId: 1 }
-    ],
     respectGroupSelect: ['溜溜梅'],
     canRespectGroupSelected: false,
     stepNum: 1,
