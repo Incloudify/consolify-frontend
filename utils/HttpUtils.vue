@@ -13,10 +13,9 @@ export default {
     },
     sendPostToApi(requestApiURI, objectData, callbackFunc, checkCookie) {
       const postData = {}
-      const ipAddr = getDeviceIpAddr()
       postData.data = objectData
       postData.time = String(Date.now())
-      postData.originip = ipAddr
+      postData.originip = this.$axios.get('https://api.incloudify.com/account/ip').then((data) => { return data.data.ip })
       this.$axios.post('https://api.incloudify.com' + requestApiURI, postData)
         .then((data) => {
           const result = data.data

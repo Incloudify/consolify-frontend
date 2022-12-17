@@ -55,7 +55,7 @@
 
         <v-stepper-content step="3">
           <v-form v-if="stepNum === 2" ref="personForm" class="person-form" elevation="0">
-            <v-select ref="sexSelector" :items="sexSelect" label="性别" persistent-hint
+            <v-select ref="sexSelector" :items="sexSelect" v-model="sex" label="性别" persistent-hint
               hint="我们会根据您提供的性别选项（如果提供）来为您提供个性化称呼。" />
             <br>
             <v-select ref="respectSelector" :items="respectSelect" label="尊称模式" item-value="respectId" item-text="des"
@@ -101,7 +101,7 @@ export default {
   mixins: [SessionUtils, HttpUtils],
   data: () => ({
     e1: 1,
-    sexSelect: ['保密', '男', '女', '武装直升机'],
+    sexSelect: ['保密', '男', '女', '武装直升机', '其他'],
     respectSelect: [
       { des: '请尽量使用标准尊称称呼我', hint: '1', respectId: 1 }
     ],
@@ -122,6 +122,7 @@ export default {
     nickNameErrCount: 1,
     nickNameErrMsg: '',
     isSubmitting: false,
+    sex: '',
     mailRule: [
       value => !!value || '不可以空着',
       (value) => {
@@ -195,7 +196,7 @@ export default {
       const saltPassword = originPassword + '81262035b6d4babbcfd8fe71892edced'
       const sha512 = cryptoInstance.createHash('sha512')
       const saltPasswordSHA512 = sha512.update(saltPassword).digest('hex')
-      const sex = this.$data.sexSelector
+      const sex = this.$data.sexSelect.indexOf(this.$data.sex)
       const dataObj = {}
       dataObj.email = mailData
       dataObj.password = saltPasswordSHA512
