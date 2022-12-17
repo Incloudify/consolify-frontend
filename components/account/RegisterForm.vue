@@ -195,11 +195,12 @@ export default {
       const saltPassword = originPassword + '81262035b6d4babbcfd8fe71892edced'
       const sha512 = cryptoInstance.createHash('sha512')
       const saltPasswordSHA512 = sha512.update(saltPassword).digest('hex')
+      const sex = this.$data.sexSelector
       const dataObj = {}
       dataObj.email = mailData
       dataObj.password = saltPasswordSHA512
       dataObj.username = nickName
-      dataObj.sex = sexSelect
+      dataObj.sex = sex
       this.sendPostToApi('/account/register', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback(requestDataReturn) {
