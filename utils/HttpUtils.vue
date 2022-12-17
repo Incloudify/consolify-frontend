@@ -4,16 +4,16 @@ export default {
   name: 'HttpUtils',
   mixins: [SessionUtils],
   methods: {
-    getDeviceIpAddr () {
+    getDeviceIpAddr() {
       this.$axios.get('https://www.taobao.com/help/getip.php')
         .then((data) => {
           const result = data.data
           return result
         })
     },
-    sendPostToApi (requestApiURI, objectData, callbackFunc, checkCookie) {
+    sendPostToApi(requestApiURI, objectData, callbackFunc, checkCookie) {
       const postData = {}
-      const ipAddr = '1.14.5.1'
+      const ipAddr = getDeviceIpAddr()
       postData.data = objectData
       postData.time = String(Date.now())
       postData.originip = ipAddr
@@ -81,7 +81,7 @@ export default {
           return false
         })
     },
-    sendGetToApi (requestApiURI, extParam, callbackFunc, checkCookie) {
+    sendGetToApi(requestApiURI, extParam, callbackFunc, checkCookie) {
       this.$axios.get('https://api.incloudify.com' + requestApiURI + '?' + extParam)
         .then((data) => {
           const result = data.data
