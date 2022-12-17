@@ -15,7 +15,10 @@ export default {
       const postData = {}
       postData.data = objectData
       postData.time = String(Date.now())
-      postData.originip = this.$axios.get('https://api.incloudify.com/account/ip').then((data) => { return data.data.ip })
+      axios.get('https://api.incloudify.com/account/ip')
+        .then(function (response) {
+          postData.originip(response.data.ip)
+        });
       this.$axios.post('https://api.incloudify.com' + requestApiURI, postData)
         .then((data) => {
           const result = data.data
