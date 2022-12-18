@@ -155,6 +155,8 @@ export default {
           this.showResult(undefined, undefined, false, true, '密码不正确')
         } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
           this.showResult('error', '参数错误, 请联系系统管理员', true, true, '参数错误')
+        } else if ((requestDataReturn.data.code === undefined && requestDataReturn.code === 500) || requestDataReturn.code === 500) {
+          this.showResult('error', '服务器内部错误, 请重试', true, true, '服务器内部错误, 请重试')
         } else if (requestDataReturn.data.code !== undefined) {
           this.showResult('error', '未识别的错误, 请联系系统管理员', true, true, '未识别的错误')
         } else {
