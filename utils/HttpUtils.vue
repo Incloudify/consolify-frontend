@@ -17,15 +17,12 @@ export default {
       postData.data = objectData
       postData.time = String(Date.now())
       postData.originip = ipAddr
-      if (checkCookie === undefined || checkCookie === true) {
-        postData.sessionid = this.getCookieValue(document.cookie.split(';'), 'sessionId')
-      }
-      this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1' + requestApiURI, postData)
+      this.$axios.post('https://api.incloudify.com' + requestApiURI, postData)
         .then((data) => {
           const result = data.data
           result.isError = false
           if (checkCookie === undefined || checkCookie === true) {
-            if (result.code === -114) {
+            if (result.code === 114) {
               this.deleteCookieValue('sessionId')
               this.checkIfSessionIdExist()
             } else {
@@ -63,6 +60,10 @@ export default {
               errorObj.code = 503
               errorObj.message = '服务不可用, 请稍后再试'
               errorObj.data = error.response.data
+            } else if (error.response.status === 422) {
+              errorObj.code = 422
+              errorObj.message = '参数错误'
+              errorObj.data = error.response.data
             } else {
               if (error.response.status !== undefined) {
                 errorObj.code = error.response.status
@@ -80,12 +81,22 @@ export default {
           return false
         })
     },
-    sendGetToApi (requestApiURI, extParam, callbackFunc) {
-      this.$axios.get('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1' + requestApiURI + '?' + extParam)
+    sendGetToApi (requestApiURI, extParam, callbackFunc, checkCookie) {
+      this.$axios.get('https://api.incloudify.com' + requestApiURI + '?' + extParam)
         .then((data) => {
           const result = data.data
-          callbackFunc(result)
-          return true
+          if (checkCookie === undefined || checkCookie === true) {
+            if (result.code === 114) {
+              this.deleteCookieValue('sessionId')
+              this.checkIfSessionIdExist()
+            } else {
+              callbackFunc(result)
+              return true
+            }
+          } else {
+            callbackFunc(result)
+            return true
+          }
         }).catch((error) => {
           const errorObj = {}
           if (error.response.status === 500) {

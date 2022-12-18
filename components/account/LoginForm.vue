@@ -129,12 +129,12 @@ export default {
       }
       const usernameData = this.$data.usernameData
       const originPassword = this.$data.originPassword
-      const saltPassword = 'MiHoMo114514' + originPassword + 'Incloudify1919810HengHengAAA'
-      const md5 = cryptoInstance.createHash('md5')
-      const saltPasswordMD5 = md5.update(saltPassword).digest('hex')
+      const saltPassword = originPassword + '81262035b6d4babbcfd8fe71892edced'
+      const sha512 = cryptoInstance.createHash('sha512')
+      const saltPasswordSHA512 = sha512.update(saltPassword).digest('hex')
       const dataObj = {}
       dataObj.username = usernameData
-      dataObj.password = saltPasswordMD5
+      dataObj.password = saltPasswordSHA512
       this.sendPostToApi('/account/login', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
@@ -149,10 +149,16 @@ export default {
         }, 500)
         this.$emit('submitSucceed')
       } else if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
-        if (requestDataReturn.data.code === 1001 && requestDataReturn.code === 404) {
+        if (requestDataReturn.data.code === 1010 && requestDataReturn.code === 404) {
           this.showResult(undefined, undefined, true, false, '用户名/邮箱不存在')
-        } else if (requestDataReturn.data.code === 1002 && requestDataReturn.code === 403) {
+        } else if (requestDataReturn.data.code === 1011 && requestDataReturn.code === 403) {
           this.showResult(undefined, undefined, false, true, '密码不正确')
+        } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
+          this.showResult('error', '参数错误, 请联系系统管理员', true, true, '参数错误')
+        } else if (requestDataReturn.data.code !== undefined) {
+          this.showResult('error', '未识别的错误, 请联系系统管理员', true, true, '未识别的错误')
+        } else {
+          this.showResult('error', '发生未知错误, 请重试', true, true, '发生未知错误, 请重试')
         }
       } else if (requestDataReturn.code === 500) {
         this.showResult('error', '服务器内部错误, 请重试', true, true, '服务器内部错误, 请重试')

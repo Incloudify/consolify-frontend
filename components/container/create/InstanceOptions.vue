@@ -50,7 +50,7 @@
           <v-btn
             v-for="subRegion in availableSubRegion[selectedCountry][selectedRegion]"
             :key="subRegion.id"
-            :disabled="!subRegion.isAvalable"
+            :disabled="!subRegion.isAvailable"
             outlined
             @click="getRegionBuyInfo(false)"
           >
@@ -63,7 +63,21 @@
       </div>
       <div>
         <p>容器类型</p>
-        <v-btn>Example Content</v-btn>
+        <v-btn-toggle
+          v-model="selectedContainerType"
+          color="rgba(0, 163, 252)"
+          mandatory
+        >
+          <v-btn
+            v-for="containerDetail in containerType"
+            :key="containerDetail.id"
+            :disabled="!containerDetail.isAvailable"
+            outlined
+            @click="getContainerInfo(false)"
+          >
+            {{ containerDetail.name }}
+          </v-btn>
+        </v-btn-toggle>
       </div>
       <div>
         <p class="instance-options-main-form-slider-p">
@@ -123,7 +137,7 @@ export default {
           {
             id: 1,
             name: '武汉一区',
-            isAvalable: true,
+            isAvailable: true,
             showLable: true,
             lableContent: '惠'
           }
@@ -132,21 +146,21 @@ export default {
           {
             id: 1,
             name: '上海一区',
-            isAvalable: true,
+            isAvailable: true,
             showLable: false,
             lableContent: null
           },
           {
             id: 2,
             name: '上海二区',
-            isAvalable: true,
+            isAvailable: true,
             showLable: false,
             lableContent: null
           },
           {
             id: 3,
             name: '上海三区',
-            isAvalable: true,
+            isAvailable: true,
             showLable: false,
             lableContent: null
           }
@@ -155,14 +169,14 @@ export default {
           {
             id: 1,
             name: '杭州一区',
-            isAvalable: true,
+            isAvailable: true,
             showLable: false,
             lableContent: null
           },
           {
             id: 2,
             name: '杭州二区',
-            isAvalable: true,
+            isAvailable: true,
             showLable: false,
             lableContent: null
           }
@@ -173,28 +187,28 @@ export default {
           {
             id: 1,
             name: '西风骑士团二楼',
-            isAvalable: true,
+            isAvailable: true,
             showLable: true,
             lableContent: '可莉轰炸'
           },
           {
             id: 2,
             name: '无相之风边上',
-            isAvalable: true,
+            isAvailable: true,
             showLable: true,
             lableContent: '超强散热'
           },
           {
             id: 3,
             name: '特瓦林背上',
-            isAvalable: true,
+            isAvailable: true,
             showLable: true,
             lableContent: '漂移IP'
           },
           {
             id: 4,
             name: '风神像顶',
-            isAvalable: true,
+            isAvailable: true,
             showLable: true,
             lableContent: '风神眷顾'
           }
@@ -203,7 +217,7 @@ export default {
           {
             id: 1,
             name: '北国银行',
-            isAvalable: false,
+            isAvailable: false,
             showLable: true,
             lableContent: '可以偷钱'
           }
@@ -212,21 +226,21 @@ export default {
           {
             id: 1,
             name: '化城郭虚空子节点',
-            isAvalable: true,
+            isAvailable: true,
             showLable: false,
             lableContent: null
           },
           {
             id: 2,
             name: '奥摩斯港虚空子节点',
-            isAvalable: false,
+            isAvailable: false,
             showLable: false,
             lableContent: null
           },
           {
             id: 3,
             name: '教令院虚空主节点',
-            isAvalable: true,
+            isAvailable: true,
             showLable: true,
             lableContent: '可以黑掉教令院'
           }
@@ -248,7 +262,27 @@ export default {
     selectedRegion: 0,
     selectedSubRegion: 0,
     selectedRAM: 40,
-    subRegionNameList: []
+    selectedContainerType: 0,
+    containerType: [
+      {
+        id: 1,
+        name: 'MCSM面板服',
+        iconSrc: '~/static/container/icons/mcsm.png',
+        isAvailable: true
+      },
+      {
+        id: 2,
+        name: 'Pterodactyl面板服',
+        iconSrc: '~/static/container/icons/ptero.png',
+        isAvailable: false
+      },
+      {
+        id: 3,
+        name: 'Docker',
+        iconSrc: '~/static/container/icons/docker.png',
+        isAvailable: true
+      }
+    ]
   }),
   mounted () {
     this.getGlobalRegionInfo()
@@ -263,7 +297,7 @@ export default {
         this.selectedSubRegion = 0
       }
       const currentSelectedRegionObject = this.availableSubRegion[this.selectedCountry][this.selectedRegion][this.selectedSubRegion]
-      if (currentSelectedRegionObject.name !== -1 && !(currentSelectedRegionObject.isAvalable === false)) {
+      if (currentSelectedRegionObject.name !== -1 && !(currentSelectedRegionObject.isAvailable === false)) {
         // this.sendGetToApi('/contained/create/getSubRegionBuyInfo', 'regionname=' + currentSelectedRegionObject.name, this.showTargetRegionInfo)
       }
     },

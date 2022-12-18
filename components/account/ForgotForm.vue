@@ -103,7 +103,7 @@ export default {
       this.sendPostToApi('/account/forgot', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
-      if (requestDataReturn.code === 1020) {
+      if (requestDataReturn.code === 1000) {
         this.$data.isSubmitted = true
         setTimeout(() => {
           this.$data.transitionPlayed = true
@@ -113,6 +113,36 @@ export default {
         if (requestDataReturn.data.code === 1021 && requestDataReturn.code === 404) {
           this.$data.usernameErr = true
           this.$data.usrErrMsg = '用户名/邮箱不存在'
+          this.$data.usrErrCount = 1
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '参数错误, 请联系系统管理员', '5000', true)
+          this.$data.usernameErr = true
+          this.$data.usrErrMsg = '参数错误'
+          this.$data.usrErrCount = 1
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else if (requestDataReturn.data.code !== undefined) {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '未识别的错误, 请联系系统管理员', '5000', true)
+          this.$data.usernameErr = true
+          this.$data.usrErrMsg = '未识别的错误'
+          this.$data.usrErrCount = 1
+          this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '发生未知错误, 请重试', '5000', true)
+          this.$data.usernameErr = true
+          this.$data.usrErrMsg = '发生未知错误, 请重试'
           this.$data.usrErrCount = 1
           this.$data.isSubmitting = false
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'

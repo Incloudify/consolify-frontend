@@ -45,7 +45,7 @@ export default {
       const sessionId = this.getCookieValue(cookie, 'sessionId')
       if (sessionId !== null) {
         let validateResult = false
-        this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"data": {"sessionId": "' + sessionId + '"}, "time": ' + String(Date.now()) + '}')
+        this.$axios.post('https://mock.apifox.cn/m1/1340156-0-c34c0a47/account/validateSession', '{"data": {"sessionId": "' + sessionId + '"}, "time": ' + String(Date.now()) + '}')
           .then((data) => {
             validateResult = data.data.code
             if (validateResult === -1000) {
@@ -89,7 +89,7 @@ export default {
       const sessionId = this.getCookieValue(cookie, 'sessionId')
       if (sessionId !== null) {
         let validateResult = false
-        this.$axios.post('http://127.0.0.1:4523/m1/1340156-0-0e7ed8c1/account/validateSession', '{"data": {"sessionId": "' + sessionId + '"}, "time": ' + String(Date.now()) + '}')
+        this.$axios.post('https://mock.apifox.cn/m1/1340156-0-c34c0a47/account/validateSession', '{"data": {"sessionId": "' + sessionId + '"}, "time": ' + String(Date.now()) + '}')
           .then((data) => {
             validateResult = data.data.code
             if (validateResult === -1000) {

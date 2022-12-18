@@ -31,20 +31,20 @@
 
 `````
 # 安装依赖项
-[consolify@localhost ~/consolify-frontend] $ yarn install
+$ yarn install
 # 启动开发构建
-[consolify@localhost ~/consolify-frontend] $ yarn dev
+$ yarn dev
 `````
 
 #### 启动生产构建
 
 ```
 # 安装依赖项
-[consolify@localhost ~/consolify-frontend] $ yarn install
+$ yarn install
 # 构建所需文件
-[consolify@localhost ~/consolify-frontend] $ yarn build
+$ yarn build
 # 启动生产构建
-[consolify@localhost ~/consolify-frontend] $ yarn start
+$ yarn start
 ```
 
 在启动完成后, 你将可以在 [http://localhost:3000](http://localhost:3000) 看到页面
