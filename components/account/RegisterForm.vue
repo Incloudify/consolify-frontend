@@ -21,9 +21,18 @@
       <v-stepper-items>
         <v-stepper-content step="1">
           <v-form v-if="stepNum === 1" ref="infoForm" elevation="0" lazy-validation>
-            <v-text-field ref="mailField" v-model="mailData" label="邮箱" hint="大小写A-z, 数字0-9, 下划线_, @, ."
-              :rules="mailRule" :error="mailErr" :error-count="mailErrCount" :error-messages="mailErrMsg" maxlength="35"
-              outlined />
+            <v-text-field
+              ref="mailField"
+              v-model="mailData"
+              label="邮箱"
+              hint="大小写A-z, 数字0-9, 下划线_, @, ."
+              :rules="mailRule"
+              :error="mailErr"
+              :error-count="mailErrCount"
+              :error-messages="mailErrMsg"
+              maxlength="35"
+              outlined
+            />
             <v-col style="display: flex; padding: 0;">
               <v-spacer />
               <v-btn ref="nextStepBtn" rounded elevation="1" color="primary" @click="setPassword">
@@ -35,14 +44,31 @@
 
         <v-stepper-content step="2">
           <v-form v-if="stepNum === 2" ref="passwdForm" class="passwd-form" elevation="0">
-            <v-text-field ref="pwdField" v-model="originPassword" label="密码"
-              hint="6-16个字符, 至少包含大写英文字母、小写英文字母、特殊符号、数字中的三种" :type="passwdShow ? 'text' : 'password'"
-              :append-icon="passwdShow ? 'mdi-eye' : 'mdi-eye-off'" :rules="passwordRule" :error="passwordErr"
-              :error-count="pwdErrCount" :error-messages="pwdErrMsg" maxlength="16" outlined
-              @click:append="passwdShow = !passwdShow" />
+            <v-text-field
+              ref="pwdField"
+              v-model="originPassword"
+              label="密码"
+              hint="6-16个字符, 至少包含大写英文字母、小写英文字母、特殊符号、数字中的三种"
+              :type="passwdShow ? 'text' : 'password'"
+              :append-icon="passwdShow ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="passwordRule"
+              :error="passwordErr"
+              :error-count="pwdErrCount"
+              :error-messages="pwdErrMsg"
+              maxlength="16"
+              outlined
+              @click:append="passwdShow = !passwdShow"
+            />
             <v-col style="display: flex; padding: 0;">
-              <v-btn id="backwardBtn" ref="backwardBtn" rounded elevation="1" color="primary" :disabled="isSubmitting"
-                @click="backwardToEmail">
+              <v-btn
+                id="backwardBtn"
+                ref="backwardBtn"
+                rounded
+                elevation="1"
+                color="primary"
+                :disabled="isSubmitting"
+                @click="backwardToEmail"
+              >
                 上一步
               </v-btn>
               <v-spacer />
@@ -55,22 +81,60 @@
 
         <v-stepper-content step="3">
           <v-form v-if="stepNum === 2" ref="personForm" class="person-form" elevation="0">
-            <v-text-field ref="nickNameField" v-model="nickName" label="用户名"
-              hint="1-16个字符, 大小写A-z, 下划线_, 数字0-9, 中文字符, 横杠-" class="reg-nick-name-field" :rules="nickNameRule"
-              :error="nickNameErr" :error-count="nickNameErrCount" :error-messages="nickNameErrMsg" maxlength="16" />
-            <v-select ref="sexSelector" :items="sexSelect" v-model="sex" label="性别" persistent-hint
-              hint="我们会根据您提供的性别选项（如果提供）来为您提供个性化称呼。" />
-            <v-select ref="respectSelector" :items="respectSelect" label="尊称模式" item-value="respectId" item-text="des"
-              persistent-hint hint="我们可能根据您选择的尊称模式，在相关消息中对您使用尊敬称呼。" />
+            <v-text-field
+              ref="nickNameField"
+              v-model="nickName"
+              label="用户名"
+              hint="1-16个字符, 大小写A-z, 下划线_, 数字0-9, 中文字符, 横杠-"
+              class="reg-nick-name-field"
+              :rules="nickNameRule"
+              :error="nickNameErr"
+              :error-count="nickNameErrCount"
+              :error-messages="nickNameErrMsg"
+              maxlength="16"
+            />
+            <v-select
+              ref="sexSelector"
+              v-model="sex"
+              :items="sexSelect"
+              label="性别"
+              persistent-hint
+              hint="我们会根据您提供的性别选项（如果提供）来为您提供个性化称呼。"
+            />
+            <v-select
+              ref="respectSelector"
+              :items="respectSelect"
+              label="尊称模式"
+              item-value="respectId"
+              item-text="des"
+              persistent-hint
+              hint="我们可能根据您选择的尊称模式，在相关消息中对您使用尊敬称呼。"
+            />
             <br>
             <v-col style="display: flex; padding: 0;">
-              <v-btn id="backwardBtn" ref="backwardBtn" rounded elevation="1" color="primary" :disabled="isSubmitting"
-                @click="e1 = 2">
+              <v-btn
+                id="backwardBtn"
+                ref="backwardBtn"
+                rounded
+                elevation="1"
+                color="primary"
+                :disabled="isSubmitting"
+                @click="e1 = 2"
+              >
                 上一步
               </v-btn>
               <v-spacer />
-              <v-btn id="submitBtn" ref="submitBtn" rounded right elevation="1" color="primary" :loading="isSubmitting"
-                :disabled="isSubmitting" @click="submit">
+              <v-btn
+                id="submitBtn"
+                ref="submitBtn"
+                rounded
+                right
+                elevation="1"
+                color="primary"
+                :loading="isSubmitting"
+                :disabled="isSubmitting"
+                @click="submit"
+              >
                 注册
               </v-btn>
             </v-col>
@@ -150,7 +214,7 @@ export default {
     ]
   }),
   methods: {
-    setPassword() {
+    setPassword () {
       if (this.$refs.infoForm.validate()) {
         this.$data.stepNum = 1
         this.$emit('processStarted')
@@ -166,7 +230,7 @@ export default {
         return false
       }
     },
-    backwardToEmail() {
+    backwardToEmail () {
       this.$data.stepNum = 0
       this.$emit('processBackward')
       setTimeout(() => {
@@ -174,7 +238,7 @@ export default {
         this.$data.e1 = 1
       }, 500)
     },
-    passwordCheck() {
+    passwordCheck () {
       const validateResult = this.$refs.passwdForm.validate()
       this.$refs.submitBtn.$el.style = ''
       if (validateResult === true) {
@@ -187,7 +251,7 @@ export default {
         return false
       }
     },
-    submit() {
+    submit () {
       const cryptoInstance = require('crypto')
       this.isSubmitting = !this.isSubmitting
       const mailData = this.$data.mailData
@@ -204,7 +268,7 @@ export default {
       dataObj.sex = sex
       this.sendPostToApi('/account/register', dataObj, this.reqDataCallback, false)
     },
-    reqDataCallback(requestDataReturn) {
+    reqDataCallback (requestDataReturn) {
       if (requestDataReturn.code === 1000) {
         this.$data.stepNum = 0
         setTimeout(() => {
