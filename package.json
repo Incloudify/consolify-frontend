@@ -17,7 +17,7 @@
     "lodash": "^4.17.21",
     "nuxt": "^2.15.8",
     "vue": "^2.6.14",
-    "vue-server-renderer": "^2.6.14",
+    "vue-server-renderer": "^2.7.14",
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.6.13",
     "webpack": "^5.75.0"
