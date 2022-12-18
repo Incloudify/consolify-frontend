@@ -4,21 +4,9 @@ export default {
   name: 'HttpUtils',
   mixins: [SessionUtils],
   methods: {
-    getDeviceIpAddr () {
-      this.$axios.get('https://www.taobao.com/help/getip.php')
-        .then((data) => {
-          const result = data.data
-          return result
-        })
-    },
-    sendPostToApi (requestApiURI, objectData, callbackFunc, checkCookie) {
+    sendPostToApi(requestApiURI, objectData, callbackFunc, checkCookie) {
       const postData = {}
       postData.data = objectData
-      postData.time = String(Date.now())
-      this.$axios.get('https://api.incloudify.com/account/ip')
-        .then((response) => {
-          postData.originip = response.data.ip
-        })
       this.$axios.post('https://api.incloudify.com' + requestApiURI, postData)
         .then((data) => {
           const result = data.data
@@ -40,11 +28,11 @@ export default {
           errorObj.isError = true
           if (error.message === 'Network Error') {
             errorObj.code = -1
-            errorObj.message = '网络错误, 请稍后重试'
+            errorObj.message = '网络异常, 请稍后再试'
           } else if (error.response !== undefined) {
             if (error.response.status === 404) {
               errorObj.code = 404
-              errorObj.message = '页面未找到, 请确认URI是否正确'
+              errorObj.message = '页面未找到'
               errorObj.data = error.response.data
             } else if (error.response.status === 403) {
               errorObj.code = 403
@@ -56,7 +44,7 @@ export default {
               errorObj.data = error.response.data
             } else if (error.response.status === 502) {
               errorObj.code = 502
-              errorObj.message = '错误的网关'
+              errorObj.message = '网关错误, 请稍后再试'
               errorObj.data = error.response.data
             } else if (error.response.status === 503) {
               errorObj.code = 503
@@ -71,7 +59,7 @@ export default {
                 errorObj.code = error.response.status
               } else {
                 errorObj.code = 0
-                errorObj.message = '网络连接异常, 请稍后再试'
+                errorObj.message = '网络异常, 请稍后再试'
               }
               errorObj.data = error.response.data
             }
@@ -83,7 +71,7 @@ export default {
           return false
         })
     },
-    sendGetToApi (requestApiURI, extParam, callbackFunc, checkCookie) {
+    sendGetToApi(requestApiURI, extParam, callbackFunc, checkCookie) {
       this.$axios.get('https://api.incloudify.com' + requestApiURI + '?' + extParam)
         .then((data) => {
           const result = data.data
