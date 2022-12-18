@@ -67,6 +67,9 @@
         <ContainerCreateOptionsConfirm v-if="stepNum === 3" />
       </v-slide-x-reverse-transition>
     </v-col>
+    <v-col class="container-create-instance-footer">
+      <p>Text Content</p>
+    </v-col>
   </v-app>
 </template>
 <script>
@@ -110,5 +113,13 @@ export default {
 .main-col{
   margin-left: 15px;
   margin-right: 15px;
+  margin-bottom: 85px;
+}
+.container-create-instance-footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  height: 80px;
 }
 </style>

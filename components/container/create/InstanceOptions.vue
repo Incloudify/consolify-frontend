@@ -61,7 +61,7 @@
           </v-btn>
         </v-btn-toggle>
       </div>
-      <div>
+      <div class="instance-options-container-type-div">
         <p>容器类型</p>
         <v-btn-toggle
           v-model="selectedContainerType"
@@ -347,5 +347,8 @@ export default {
   color: white;
   font-size: 12px;
   border-radius: 8px;
+}
+.instance-options-container-type-div{
+  margin-top: 25px;
 }
 </style>
