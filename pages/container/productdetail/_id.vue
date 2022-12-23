@@ -23,6 +23,12 @@
         </v-icon>
         IP: 0.0.0.0(共享型公网)
       </v-btn>
+      <v-btn text>
+        <v-icon color="grey">
+          mdi-inbox
+        </v-icon>
+        实例类型：无双大黄瓜
+      </v-btn>
       <v-spacer />
       <v-tooltip bottom>
         <template #activator="{ on, attrs }">
@@ -189,10 +195,11 @@
       <!-- 总览 -->
       <v-tab-item
         value="home"
+        class="ma-2"
       >
         <v-row>
           <v-col>
-            <v-card>
+            <v-card class="ma-2">
               <v-card-title>
                 <v-icon>
                   mdi-information-outline
@@ -200,7 +207,47 @@
                 主机信息
               </v-card-title>
               <v-card-text>
-                Foo Bar
+                <p>实例备注：我是一个一个一个测试文本</p>
+                <p>外网地址：</p>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col>
+            <v-card class="ma-2">
+              <v-card-title>
+                <v-icon>
+                  mdi-chip
+                </v-icon>
+                计算资源
+              </v-card-title>
+              <v-card-text>
+                <p>核心使用率：51% (51/100 性能点数)<v-progress-linear color="green" rounded value="51" /></p>
+                <p>辅助核心使用率：0% (0/10 性能点数)<v-progress-linear color="green" rounded stream value="0" buffer-value="10" /></p>
+                <p>您可开启辅助核心以在必要时增强实例计算能力。可能会产生额外费用。</p>
+              </v-card-text>
+            </v-card>
+            <v-card class="ma-2">
+              <v-card-title>
+                <v-icon>
+                  mdi-memory
+                </v-icon>
+                内存资源
+              </v-card-title>
+              <v-card-text>
+                <p>物理内存使用率：99% (113MB/114MB)<v-progress-linear color="red" rounded value="99" /></p>
+                <p>辅助内存使用率：未启用<v-progress-linear color="grey" rounded stream value="0" buffer-value="0" /></p>
+                <p>您可启用辅助内存允许突发内存占用。可能会产生额外费用。</p>
+              </v-card-text>
+            </v-card>
+            <v-card class="ma-2">
+              <v-card-title>
+                <v-icon>
+                  mdi-harddisk
+                </v-icon>
+                存储资源
+              </v-card-title>
+              <v-card-text>
+                <p>主硬盘使用率：1% (1GB/114TB ESSD)<v-progress-linear color="green" rounded value="1" /></p>
               </v-card-text>
             </v-card>
           </v-col>
