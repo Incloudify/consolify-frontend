@@ -21,7 +21,7 @@
     <v-row>
       <div v-for="products in recommendProductsInfo.products" :key="products.key" class="products-div">
         <v-col>
-          <v-btn class="productbtn">
+          <v-btn class="productbtn" :to="products.link">
             {{ products.productName }}
           </v-btn>
         </v-col>
@@ -41,31 +41,38 @@ export default {
       products: [
         {
           key: 1,
-          productName: '甜甜花酿鸡'
+          productName: '甜甜花酿鸡',
+          link: '/kfc/crazy/thurday/vme50'
         },
         {
           key: 2,
-          productName: 'MCSM面板服'
+          productName: 'MCSM面板服',
+          link: '/container'
         },
         {
           key: 3,
-          productName: '轻量应用服务器'
+          productName: '轻量应用服务器',
+          link: '/lws'
         },
         {
           key: 4,
-          productName: '云服务器'
+          productName: '云服务器',
+          link: '/ics'
         },
         {
           key: 5,
-          productName: '提瓦特桌面'
+          productName: '提瓦特桌面',
+          link: '/tcd'
         },
         {
           key: 6,
-          productName: '虚拟主机'
+          productName: '虚拟主机',
+          link: '/ivh'
         },
         {
           key: 7,
-          productName: '蒙德土豆饼'
+          productName: '蒙德土豆饼',
+          link: '/mondstadt/potato/pie'
         }
       ]
     }

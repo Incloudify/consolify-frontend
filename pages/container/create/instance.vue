@@ -58,7 +58,7 @@
     </v-col>
     <v-col class="main-col">
       <v-slide-x-reverse-transition>
-        <ContainerCreateInstanceOptions v-if="stepNum === 1" />
+        <ContainerCreateInstanceOptions v-if="stepNum === 1" @updateCost="updateCost" />
       </v-slide-x-reverse-transition>
       <v-slide-x-reverse-transition>
         <ContainerCreateInstanceInfo v-if="stepNum === 2" />
@@ -68,7 +68,45 @@
       </v-slide-x-reverse-transition>
     </v-col>
     <v-col class="container-create-instance-footer">
-      <p>Text Content</p>
+      <!-- 有些人总说我直接在元素上写style不文明, 那我很好奇这个style功能是用来干什么的 -->
+      <!-- 还全叫我写CSS里, 一个元素一个class名, 6 -->
+      <!-- 你高清, 你1080P -->
+      <!-- 但反正不是行云团队里的人, 总之是往事了 -->
+      <!-- 我就要用style -->
+      <!-- 现在是第一次实践 -->
+      <!-- 我突然想起来改天得给这个仓库装个StyleLint -->
+      <!-- 现在这个CSS的格式烂的跟s**t一样 -->
+      <!-- 如果你只是一个用户, 碰巧看到了这些, 很高兴能与你分享我的故事 -->
+      <!-- 当然如果这些影响了你的心情那我是很抱歉的 -->
+      <!-- 如果你是氧化, 我觉得还是别把这些删掉, 当点有意思的东西看看 -->
+      <!-- 不纯, 写于2022/12/27 08:56, 上网课化学课时 -->
+      <!-- 突然想起来基于Vue的特性用户好像看不到这些东西 -->
+      <!-- 删不删呢... -->
+      <!-- 讲个笑话, 上面提到的那个实践我现在又想改到class去了 -->
+      <!-- 好了, 改了 -->
+      <div style="display: block;">
+        <p class="container-create-instance-cost-hint-content">
+          总计费用
+        </p>
+        <font class="container-create-instance-cost-value-content">
+          <h2 ref="currentCost">
+            --.-
+          </h2><p>元</p>
+        </font>
+      </div>
+      <div class="container-create-instance-footer-step-manage-area-div">
+        <v-fade-transition>
+          <v-checkbox v-if="stepNum === 3" v-model="agreementIsAgreed" label="我已阅读并同意《用户协议》和《隐私政策》" />
+        </v-fade-transition>
+        <v-fade-transition>
+          <v-btn v-if="stepNum !== 1" elevation="0">
+            上一步
+          </v-btn>
+        </v-fade-transition>
+        <v-btn elevation="0" :disabled="stepNum === 3 && agreementIsAgreed === false" color="primary">
+          下一步
+        </v-btn>
+      </div>
     </v-col>
   </v-app>
 </template>
@@ -77,11 +115,17 @@ export default {
   name: 'CreateContainerCloudInstancePage',
   layout: 'default',
   data: () => ({
-    stepNum: 1
+    stepNum: 1,
+    agreementIsAgreed: false
   }),
   head: () => ({
     title: '创建容器云实例'
-  })
+  }),
+  methods: {
+    updateCost (data) {
+      this.$refs.currentCost.textContent = data
+    }
+  }
 }
 </script>
 <style>
@@ -121,5 +165,32 @@ export default {
   width: 100%;
   background-color: white;
   height: 80px;
+  box-shadow: 0px -4px 12px 2px rgba(0, 0, 0, .1);
+  display: flex;
+}
+.container-create-instance-cost-value-content{
+  display: flex;
+  color: rgb(255, 115, 0);
+}
+.container-create-instance-cost-value-content p{
+  font-size: 8px;
+  margin-top: 12.5px;
+}
+.container-create-instance-cost-hint-content{
+  margin-top: 5px;
+  font-weight: 100;
+  margin-bottom: 0 !important;
+  font-size: 14px;
+}
+.container-create-instance-footer-step-manage-area-div{
+  position: absolute;
+  display: flex;
+  right: 0;
+}
+.container-create-instance-footer-step-manage-area-div .v-btn{
+  margin: 10px 20px;
+}
+.container-create-instance-footer-step-manage-area-div .v-input--checkbox{
+  margin: 12px 20px;
 }
 </style>

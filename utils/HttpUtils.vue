@@ -4,7 +4,7 @@ export default {
   name: 'HttpUtils',
   mixins: [SessionUtils],
   methods: {
-    sendPostToApi(requestApiURI, objectData, callbackFunc, checkCookie) {
+    sendPostToApi (requestApiURI, objectData, callbackFunc, checkCookie) {
       const postData = {}
       postData.data = objectData
       this.$axios.post('https://api.incloudify.com' + requestApiURI, postData)
@@ -71,7 +71,7 @@ export default {
           return false
         })
     },
-    sendGetToApi(requestApiURI, extParam, callbackFunc, checkCookie) {
+    sendGetToApi (requestApiURI, extParam, callbackFunc, checkCookie) {
       this.$axios.get('https://api.incloudify.com' + requestApiURI + '?' + extParam)
         .then((data) => {
           const result = data.data

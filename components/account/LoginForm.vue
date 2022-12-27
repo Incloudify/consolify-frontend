@@ -2,15 +2,44 @@
   <div>
     <v-scroll-x-transition>
       <v-form v-if="!isSubmitted" ref="infoForm" elevation="0" lazy-validation>
-        <v-text-field ref="usrField" v-model="usernameData" label="用户名或邮箱" hint="大小写A-z, 数字0-9, 下划线_, @, ."
-          :rules="userNameRule" :error="usernameErr" :error-count="usrErrCount" :error-messages="usrErrMsg"
-          maxlength="35" outlined />
-        <v-text-field ref="pwdField" v-model="originPassword" label="密码" hint="注册时设置的密码"
-          :type="passwdShow ? 'text' : 'password'" :append-icon="passwdShow ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="passwordRule" :error="passwordErr" :error-count="pwdErrCount" :error-messages="pwdErrMsg"
-          maxlength="128" outlined @click:append="passwdShow = !passwdShow" />
-        <v-btn id="submitBtn" ref="submitBtn" rounded block elevation="1" color="primary" :loading="isSubmitting"
-          :disabled="isSubmitting" @click="submit">
+        <v-text-field
+          ref="usrField"
+          v-model="usernameData"
+          label="用户名或邮箱"
+          hint="大小写A-z, 数字0-9, 下划线_, @, ."
+          :rules="userNameRule"
+          :error="usernameErr"
+          :error-count="usrErrCount"
+          :error-messages="usrErrMsg"
+          maxlength="35"
+          outlined
+        />
+        <v-text-field
+          ref="pwdField"
+          v-model="originPassword"
+          label="密码"
+          hint="注册时设置的密码"
+          :type="passwdShow ? 'text' : 'password'"
+          :append-icon="passwdShow ? 'mdi-eye' : 'mdi-eye-off'"
+          :rules="passwordRule"
+          :error="passwordErr"
+          :error-count="pwdErrCount"
+          :error-messages="pwdErrMsg"
+          maxlength="128"
+          outlined
+          @click:append="passwdShow = !passwdShow"
+        />
+        <v-btn
+          id="submitBtn"
+          ref="submitBtn"
+          rounded
+          block
+          elevation="1"
+          color="primary"
+          :loading="isSubmitting"
+          :disabled="isSubmitting"
+          @click="submit"
+        >
           登录
         </v-btn>
       </v-form>
@@ -21,7 +50,14 @@
           mdi-check
         </v-icon>
         <p>登录成功</p>
-        <v-btn ref="backHomeBtn" rounded block elevation="1" color="primary" to="/table">
+        <v-btn
+          ref="backHomeBtn"
+          rounded
+          block
+          elevation="1"
+          color="primary"
+          to="/table"
+        >
           返回首页
         </v-btn>
       </v-form>
@@ -67,7 +103,7 @@ export default {
     ]
   }),
   methods: {
-    submit() {
+    submit () {
       const cryptoInstance = require('crypto')
       const validateResult = this.$refs.infoForm.validate()
       this.$refs.submitBtn.$el.style = ''
@@ -88,7 +124,7 @@ export default {
       dataObj.password = saltPasswordSHA512
       this.sendPostToApi('/account/login', dataObj, this.reqDataCallback, false)
     },
-    reqDataCallback(requestDataReturn) {
+    reqDataCallback (requestDataReturn) {
       if (requestDataReturn.code === 1000) {
         const sessionIdReturn = requestDataReturn.data.sessionId
         if (sessionIdReturn !== null) {
@@ -123,10 +159,10 @@ export default {
         this.showResult('error', '发生未知错误, 请重试', true, true, '发生未知错误, 请重试')
       }
     },
-    clearBtnStyle() {
+    clearBtnStyle () {
       this.$refs.submitBtn.$el.style = ''
     },
-    showResult(snackBarType, snackBarMsg, usrErr, pwdErr, errMsg) {
+    showResult (snackBarType, snackBarMsg, usrErr, pwdErr, errMsg) {
       if (snackBarType !== undefined) {
         this.$parent.$parent.$parent.$emit('showSnackBar', snackBarType, snackBarMsg, '5000', true)
       }

@@ -3,7 +3,9 @@
     <v-form class="instance-options-main-form">
       <div>
         <p>实例名称</p>
+        <!-- 下面这个Label是氧化叫我这么写的 -->
         <v-text-field
+          v-model="instanceName"
           label="为你的实例谱写新的篇章"
           outlined
           clearable
@@ -55,6 +57,7 @@
             @click="getRegionBuyInfo(false)"
           >
             {{ subRegion.name }}
+            <!-- 这个惠氧化要求要加(确信 -->
             <v-avatar v-if="subRegion.showLable" size="16" color="rgba(231, 64, 50, .8)" class="instance-options-subregion-lable" width="auto">
               {{ subRegion.lableContent }}
             </v-avatar>
@@ -105,7 +108,7 @@
         <div class="instance-options-slider-div">
           <p>{{ subRegionInfo.calcPointAvailableSection[0] }}</p>
           <v-slider
-            v-model="selectedRAM"
+            v-model="selectedCalcPoint"
             color="rgba(0, 163, 255)"
             step="1"
             thumb-label
@@ -261,8 +264,10 @@ export default {
     selectedCountry: 0,
     selectedRegion: 0,
     selectedSubRegion: 0,
-    selectedRAM: 40,
+    selectedCalcPoint: 40,
+    selectedRAM: 1.00,
     selectedContainerType: 0,
+    instanceName: '',
     containerType: [
       {
         id: 1,
@@ -282,11 +287,13 @@ export default {
         iconSrc: '~/static/container/icons/docker.png',
         isAvailable: true
       }
-    ]
+    ],
+    currentCost: '0.0'
   }),
   mounted () {
     this.getGlobalRegionInfo()
     this.getRegionBuyInfo()
+    this.$emit('updateCost', this.$data.currentCost)
   },
   methods: {
     getGlobalRegionInfo () {
@@ -302,6 +309,9 @@ export default {
       }
     },
     showTargetRegionInfo () {
+      // To Be Done
+    },
+    getContainerInfo () {
       // To Be Done
     }
   }
