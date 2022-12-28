@@ -154,17 +154,19 @@
               我们已向您的邮箱发送验证码, 请检查收件箱。
             </p>
             <v-otp-input
+              v-model="verifyCode"
               length="6"
               type="number"
               class="register-verify-code-otp-input"
-              v-model="verifyCode"
               :rules="verifyCodeRule"
               :error="captchaError"
               :error-count="captchaErrCount"
               :error-message="captchaErrMessage"
-            ></v-otp-input>
+            />
             <div style="width: 100%; text-align: center;">
-              <v-btn class="register-verify-code-resend-btn" elevation="0" @click="resendVerifyCode" color="primary">没有收到? 尝试重新发送</v-btn>
+              <v-btn class="register-verify-code-resend-btn" elevation="0" color="primary" @click="resendVerifyCode">
+                没有收到? 尝试重新发送
+              </v-btn>
             </div>
             <v-col style="display: flex; padding: 0;">
               <v-btn
