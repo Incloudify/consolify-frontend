@@ -1,4 +1,7 @@
 <template>
+  <!-- u1s1, 这页面代码乱的要死 -->
+  <!-- 但没精力重构了 -->
+  <!-- 不纯, 写于2022/12/28 22:17 -->
   <div>
     <v-stepper v-model="e1" elevation="0">
       <v-stepper-header class="elevation-0 reg-stepper-header">
@@ -14,7 +17,11 @@
           个性化
         </v-stepper-step>
         <v-divider />
-        <v-stepper-step step="4">
+        <v-stepper-step :complete="e1 > 4" step="4">
+          验证邮箱
+        </v-stepper-step>
+        <v-divider />
+        <v-stepper-step step="5">
           完成注册
         </v-stepper-step>
       </v-stepper-header>
@@ -80,7 +87,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <v-form v-if="stepNum === 2" ref="personForm" class="person-form" elevation="0">
+          <v-form ref="personForm" class="person-form" elevation="0">
             <v-text-field
               ref="nickNameField"
               v-model="nickName"
@@ -103,6 +110,7 @@
             />
             <v-select
               ref="respectSelector"
+              v-model="respectChoice"
               :items="respectSelect"
               label="尊称模式"
               item-value="respectId"
@@ -125,6 +133,53 @@
               </v-btn>
               <v-spacer />
               <v-btn
+                id="nextStepBtn"
+                ref="nextStepBtn"
+                rounded
+                right
+                elevation="1"
+                color="primary"
+                :disabled="isSubmitting"
+                @click="e1 = 4"
+              >
+                下一步
+              </v-btn>
+            </v-col>
+          </v-form>
+        </v-stepper-content>
+
+        <v-stepper-content step="4">
+          <v-form ref="captchaForm" class="captcha-form" elevation="0">
+            <p style="text-align: center;">
+              我们已向您的邮箱发送验证码, 请检查收件箱。
+            </p>
+            <v-otp-input
+              length="6"
+              type="number"
+              class="register-verify-code-otp-input"
+              v-model="verifyCode"
+              :rules="verifyCodeRule"
+              :error="captchaError"
+              :error-count="captchaErrCount"
+              :error-message="captchaErrMessage"
+            ></v-otp-input>
+            <div style="width: 100%; text-align: center;">
+              <v-btn class="register-verify-code-resend-btn" elevation="0" @click="resendVerifyCode" color="primary">没有收到? 尝试重新发送</v-btn>
+            </div>
+            <v-col style="display: flex; padding: 0;">
+              <v-btn
+                id="backwardBtn"
+                ref="backwardBtn"
+                rounded
+                elevation="1"
+                color="primary"
+                :disabled="isSubmitting"
+                @click="e1 = 3"
+              >
+                上一步
+              </v-btn>
+              <v-spacer />
+              <v-btn
                 id="submitBtn"
                 ref="submitBtn"
                 rounded
@@ -140,7 +195,8 @@
             </v-col>
           </v-form>
         </v-stepper-content>
-        <v-stepper-content step="4">
+
+        <v-stepper-content step="5">
           <v-form v-if="stepNum === 3" ref="succeedForm" class="succeed-form" elevation="0">
             <v-icon size="120" color="grey darken-2">
               mdi-check
@@ -167,7 +223,8 @@ export default {
     sexSelect: ['保密', '男', '女', '武装直升机', '其他'],
     respectSelect: [
       { des: '请用标准尊称称呼我', hint: '1', respectId: 1 },
-      { des: '请以朋友的态度称呼我', hint: '2', respectId: 2 }
+      { des: '请以朋友的态度称呼我', hint: '2', respectId: 2 },
+      { des: '请以最好的伙伴的态度称呼我', hint: '3', respectId: 3 }
     ],
     respectGroupSelect: ['溜溜梅'],
     canRespectGroupSelected: false,
@@ -185,8 +242,13 @@ export default {
     nickNameErr: false,
     nickNameErrCount: 1,
     nickNameErrMsg: '',
+    captchaErr: false,
+    captchaErrCount: 1,
+    captchaErrMessage: '',
     isSubmitting: false,
-    sex: '',
+    sex: 1,
+    respectChoice: 1,
+    verifyCode: '',
     mailRule: [
       value => !!value || '不可以空着',
       (value) => {
@@ -211,6 +273,9 @@ export default {
           return false || '仔细看看Hint哦 (1-16个字符, 大小写A-z, 下划线_, 数字0-9, 中文字符, 横杠-)'
         }
       }
+    ],
+    verifyCodeRule: [
+      value => !!value || '你的验证码去哪儿了'
     ]
   }),
   methods: {
@@ -261,11 +326,15 @@ export default {
       const sha512 = cryptoInstance.createHash('sha512')
       const saltPasswordSHA512 = sha512.update(saltPassword).digest('hex')
       const sex = this.$data.sexSelect.indexOf(this.$data.sex)
+      const respectId = this.$data.respectChoice
+      const verifyCode = this.$data.verifyCode
       const dataObj = {}
       dataObj.email = mailData
       dataObj.password = saltPasswordSHA512
       dataObj.username = nickName
       dataObj.sex = sex
+      dataObj.respectId = respectId
+      dataObj.captcha = verifyCode
       this.sendPostToApi('/account/register', dataObj, this.reqDataCallback, false)
     },
     reqDataCallback (requestDataReturn) {
@@ -273,7 +342,7 @@ export default {
         this.$data.stepNum = 0
         setTimeout(() => {
           this.$data.stepNum = 3
-          this.$data.e1 = 4
+          this.$data.e1 = 5
         }, 500)
         this.$emit('submitSucceed')
       } if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
@@ -301,6 +370,15 @@ export default {
         } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '参数错误, 请联系系统管理员', '5000', true)
           this.$data.isSubmitting = false
+          this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
+          setTimeout(() => {
+            this.$refs.submitBtn.$el.style = ''
+          }, 1500)
+        } else if (requestDataReturn.code === 403 && requestDataReturn.data.code === 3017) {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '验证码错误', '5000', true)
+          this.$data.isSubmitting = false
+          this.$data.verifyCode = ''
+          this.$data.captchaErr = true
           this.$refs.submitBtn.$el.style = 'background-color: #EE6363 !important; border-color: #EE6363 !important;'
           setTimeout(() => {
             this.$refs.submitBtn.$el.style = ''
@@ -388,5 +466,15 @@ export default {
 
 .reg-nick-name-field {
   margin-top: 15px;
+}
+
+.register-verify-code-otp-input .v-input .v-input__control .v-input__slot {
+  min-height: 80px;
+  font-size: 30px;
+}
+
+.register-verify-code-resend-btn {
+  margin-top: 10px;
+  margin-bottom: 40px;
 }
 </style>
