@@ -25,11 +25,11 @@
         你的账户发生欠费, 请尽快补齐款项, 否则你的账户及名下资产将在 <strong>{{ deletionRemainDays }} 日后被删除</strong>
       </v-alert>
       <v-card-actions style="padding-bottom: 20px;">
-        <v-btn color="primary">
+        <v-btn to="/addfunds/vme50" color="primary">
           <v-icon>mdi-cash</v-icon>
           氪金
         </v-btn>
-        <v-btn>
+        <v-btn to="/billing/history">
           账单
         </v-btn>
       </v-card-actions>
