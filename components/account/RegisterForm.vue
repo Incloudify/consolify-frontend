@@ -394,7 +394,7 @@ export default {
           this.$data.e1 = 5
         }, 500)
         this.$emit('submitSucceed')
-      } if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
+      } else if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
         if ((requestDataReturn.data.code === 1002 && requestDataReturn.code === 500) || requestDataReturn.code === 500) {
           this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '服务器内部错误, 请重试', '5000', true)
           this.$data.mailErr = true
