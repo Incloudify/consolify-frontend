@@ -27,7 +27,7 @@
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
-          <v-form v-if="stepNum === 1" ref="infoForm" elevation="0" lazy-validation>
+          <v-form ref="infoForm" elevation="0" lazy-validation>
             <v-text-field
               ref="mailField"
               v-model="mailData"
@@ -50,7 +50,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-form v-if="stepNum === 2" ref="passwdForm" class="passwd-form" elevation="0">
+          <v-form ref="passwdForm" class="passwd-form" elevation="0">
             <v-text-field
               ref="pwdField"
               v-model="originPassword"
@@ -140,7 +140,7 @@
                 elevation="1"
                 color="primary"
                 :disabled="isSubmitting"
-                @click="e1 = 4"
+                @click="e1 = 4; sendVerifyCode()"
               >
                 下一步
               </v-btn>
@@ -150,6 +150,9 @@
 
         <v-stepper-content step="4">
           <v-form ref="captchaForm" class="captcha-form" elevation="0">
+            <v-icon size="98" color="grey" class="register-email-send-success-icon">
+              mdi-email-check-outline
+            </v-icon>
             <p style="text-align: center;">
               我们已向您的邮箱发送验证码, 请检查收件箱。
             </p>
@@ -159,13 +162,20 @@
               type="number"
               class="register-verify-code-otp-input"
               :rules="verifyCodeRule"
-              :error="captchaError"
+              :error="captchaErr"
               :error-count="captchaErrCount"
               :error-message="captchaErrMessage"
             />
             <div style="width: 100%; text-align: center;">
-              <v-btn class="register-verify-code-resend-btn" elevation="0" color="primary" @click="resendVerifyCode">
-                没有收到? 尝试重新发送
+              <v-btn
+                class="register-verify-code-resend-btn"
+                elevation="0"
+                color="primary"
+                :loading="isSendingVerifyCode"
+                :disabled="!isResendBtnAvailable || isSendingVerifyCode"
+                @click="sendVerifyCode"
+              >
+                没有收到? 尝试重新发送 <span v-if="remainSecs > 0">({{ remainSecs }})</span>
               </v-btn>
             </div>
             <v-col style="display: flex; padding: 0;">
@@ -192,14 +202,14 @@
                 :disabled="isSubmitting"
                 @click="submit"
               >
-                注册
+                注&nbsp;&nbsp;册
               </v-btn>
             </v-col>
           </v-form>
         </v-stepper-content>
 
         <v-stepper-content step="5">
-          <v-form v-if="stepNum === 3" ref="succeedForm" class="succeed-form" elevation="0">
+          <v-form ref="succeedForm" class="succeed-form" elevation="0">
             <v-icon size="120" color="grey darken-2">
               mdi-check
             </v-icon>
@@ -230,7 +240,6 @@ export default {
     ],
     respectGroupSelect: ['溜溜梅'],
     canRespectGroupSelected: false,
-    stepNum: 1,
     passwdShow: false,
     mailData: '',
     nickName: '',
@@ -248,6 +257,9 @@ export default {
     captchaErrCount: 1,
     captchaErrMessage: '',
     isSubmitting: false,
+    isResendBtnAvailable: true,
+    remainSecs: -1,
+    isSendingVerifyCode: false,
     sex: 1,
     respectChoice: 1,
     verifyCode: '',
@@ -283,10 +295,8 @@ export default {
   methods: {
     setPassword () {
       if (this.$refs.infoForm.validate()) {
-        this.$data.stepNum = 1
         this.$emit('processStarted')
         setTimeout(() => {
-          this.$data.stepNum = 2
           this.$data.e1 = 2
         }, 500)
       } else {
@@ -298,10 +308,8 @@ export default {
       }
     },
     backwardToEmail () {
-      this.$data.stepNum = 0
       this.$emit('processBackward')
       setTimeout(() => {
-        this.$data.stepNum = 1
         this.$data.e1 = 1
       }, 500)
     },
@@ -317,6 +325,47 @@ export default {
         }, 1500)
         return false
       }
+    },
+    sendVerifyCode () {
+      const postObject = {}
+      postObject.type = 'email'
+      postObject.id = this.$data.mailData
+      postObject.activity = '给氧化下蛋'
+      this.$data.isSendingVerifyCode = true
+      this.sendPostToApi('/account/sendVerifyCode', postObject, this.verifyCodeSendCallBack, false)
+    },
+    verifyCodeSendCallBack (requestDataReturn) {
+      if (requestDataReturn.isError !== true) {
+        if (requestDataReturn.code === 1000) {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'success', '验证码发送成功', '3000', true)
+          this.$data.isSendingVerifyCode = false
+          this.verifyCodeResendCountDown()
+        } else {
+          this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '未知错误, 请稍后重试', '5000', false)
+        }
+      } else if (requestDataReturn.code === 422 && requestDataReturn.data.code === 3014) {
+        this.$parent.$parent.$parent.$emit('showSnackBar', 'warning', '发送频率过快, 请稍后再试', '7000', false)
+      } else if (requestDataReturn.code === 500 || requestDataReturn.data.code === 3015) {
+        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '验证码发送失败, 远端服务器异常', '10000', false)
+      } else if (requestDataReturn.code === 400 && requestDataReturn.data.code === 3016) {
+        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '验证码类型错误, 请联系系统管理员', '8000', false)
+      } else if (requestDataReturn.code === 422 && requestDataReturn.data.code === 1003) {
+        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '参数错误, 请联系系统管理员', '5000', false)
+      } else {
+        this.$parent.$parent.$parent.$emit('showSnackBar', 'error', '未知错误, 请稍后重试', '5000', false)
+      }
+    },
+    verifyCodeResendCountDown () {
+      this.$data.isResendBtnAvailable = false
+      this.$data.remainSecs = 60
+      const resendBtnCoundDownInterval = setInterval(() => {
+        if (this.$data.remainSecs <= 0) {
+          this.$data.isResendBtnAvailable = true
+          clearInterval(resendBtnCoundDownInterval)
+        } else {
+          this.$data.remainSecs -= 1
+        }
+      }, 1000)
     },
     submit () {
       const cryptoInstance = require('crypto')
@@ -341,9 +390,7 @@ export default {
     },
     reqDataCallback (requestDataReturn) {
       if (requestDataReturn.code === 1000) {
-        this.$data.stepNum = 0
         setTimeout(() => {
-          this.$data.stepNum = 3
           this.$data.e1 = 5
         }, 500)
         this.$emit('submitSucceed')
@@ -478,5 +525,11 @@ export default {
 .register-verify-code-resend-btn {
   margin-top: 10px;
   margin-bottom: 40px;
+}
+
+.register-email-send-success-icon {
+  text-align: center;
+  min-width: 100%;
+  margin-bottom: 10px;
 }
 </style>
