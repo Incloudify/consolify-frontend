@@ -330,7 +330,7 @@ export default {
       const postObject = {}
       postObject.type = 'email'
       postObject.id = this.$data.mailData
-      postObject.activity = '给氧化下蛋'
+      postObject.activity = 'New User Register By E-mail'
       this.$data.isSendingVerifyCode = true
       this.sendPostToApi('/account/sendVerifyCode', postObject, this.verifyCodeSendCallBack, false)
     },
