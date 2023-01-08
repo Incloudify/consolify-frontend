@@ -5,7 +5,7 @@
     <p ref="welcomeTxt">
       欢迎回来!
     </p>
-    <AccountLoginForm @submitSucceed="submitSucceed" />
+    <AccountLoginForm @submitSucceed="submitSucceed" @submit.native.prevent />
     <div ref="optionsTxt" class="options">
       <v-btn elevation="0" color="transparent" rounded max-width="100px" to="/account/forgot">
         忘记密码

@@ -5,7 +5,7 @@
     <p ref="welcomeTxt">
       你好, 世界。
     </p>
-    <AccountRegisterForm @processBackward="processBackward" @processStarted="processStarted" @submitSucceed="submitSucceed" />
+    <AccountRegisterForm @processBackward="processBackward" @processStarted="processStarted" @submitSucceed="submitSucceed" @submit.native.prevent />
     <div ref="optionsTxt" class="options">
       <v-btn elevation="0" color="transparent" rounded max-width="250px" to="/account/login">
         事实上我已经有账户了

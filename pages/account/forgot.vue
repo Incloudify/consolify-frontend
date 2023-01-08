@@ -3,7 +3,7 @@
     <img src="~/static/incloudify-logo-large.png">
     <h1>忘记密码</h1>
     <p>「最后, 森林会记住一切」</p>
-    <AccountForgotForm @submitSucceed="submitSucceed" />
+    <AccountForgotForm @submitSucceed="submitSucceed" @submit.native.prevent />
     <div ref="optionsTxt" class="options">
       <v-btn elevation="0" color="transparent" rounded max-width="200px" to="/account/login">
         我又双叒叕想起来了
