@@ -5,8 +5,8 @@
         <v-text-field
           ref="usrField"
           v-model="usernameData"
-          label="用户名或邮箱"
-          hint="大小写A-z, 数字0-9, 下划线_, @, ."
+          label="用户名"
+          hint="大小写A-z, 数字0-9, 下划线_, ."
           :rules="userNameRule"
           :error="usernameErr"
           :error-count="usrErrCount"
@@ -137,7 +137,7 @@ export default {
         this.$emit('submitSucceed')
       } else if (requestDataReturn.data !== undefined && requestDataReturn.data.code !== undefined) {
         if (requestDataReturn.data.code === 3010 && requestDataReturn.code === 404) {
-          this.showResult(undefined, undefined, true, false, '用户名或邮箱不存在')
+          this.showResult(undefined, undefined, true, false, '用户名不存在')
         } else if (requestDataReturn.data.code === 3011 && requestDataReturn.code === 403) {
           this.showResult(undefined, undefined, false, true, '密码错误')
         } else if ((requestDataReturn.data.code === 1003 && requestDataReturn.code === 422) || requestDataReturn.code === 422) {
