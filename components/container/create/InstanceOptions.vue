@@ -17,7 +17,7 @@
       <div>
         <p>可用区</p>
         <v-btn-toggle
-          v-model="selectedCountry"
+          v-model="selectedInfo.selectedCountry"
           color="rgba(0, 163, 252)"
           mandatory
         >
@@ -31,13 +31,13 @@
           </v-btn>
         </v-btn-toggle>
         <v-btn-toggle
-          v-model="selectedRegion"
+          v-model="selectedInfo.selectedRegion"
           color="rgba(0, 163, 252)"
           mandatory
         >
           <v-btn
-            v-for="region in availableRegion[selectedCountry]"
-            :key="availableRegion[selectedCountry].indexOf(region)"
+            v-for="region in availableRegion[selectedInfo.selectedCountry]"
+            :key="availableRegion[selectedInfo.selectedCountry].indexOf(region)"
             outlined
             @click="getRegionBuyInfo(true)"
           >
@@ -45,12 +45,12 @@
           </v-btn>
         </v-btn-toggle>
         <v-btn-toggle
-          v-model="selectedSubRegion"
+          v-model="selectedInfo.selectedSubRegion"
           color="rgba(0, 163, 252)"
           mandatory
         >
           <v-btn
-            v-for="subRegion in availableSubRegion[selectedCountry][selectedRegion]"
+            v-for="subRegion in availableSubRegion[selectedInfo.selectedCountry][selectedInfo.selectedRegion]"
             :key="subRegion.id"
             :disabled="!subRegion.isAvailable"
             outlined
@@ -67,7 +67,7 @@
       <div class="instance-options-container-type-div">
         <p>容器类型</p>
         <v-btn-toggle
-          v-model="selectedContainerType"
+          v-model="selectedInfo.selectedContainerType"
           color="rgba(0, 163, 252)"
           mandatory
         >
@@ -94,7 +94,7 @@
                 icon
                 style="margin-left: 5px;"
                 v-bind="attrs"
-                to="/redirect?url=yang1120.club/archives/128"
+                to="/redirect?url=blog.yang1120.com/archives/128"
                 v-on="on"
               >
                 <v-icon size="20">
@@ -106,9 +106,9 @@
           </v-tooltip>
         </p>
         <div class="instance-options-slider-div">
-          <p>{{ subRegionInfo.calcPointAvailableSection[0] }}</p>
+          <p>{{ subRegionInfo.calcPointAvailableSection[0] + ' 分' }}</p>
           <v-slider
-            v-model="selectedCalcPoint"
+            v-model="selectedInfo.selectedCalcPoint"
             color="rgba(0, 163, 255)"
             step="1"
             thumb-label
@@ -117,13 +117,121 @@
             :max="subRegionInfo.calcPointAvailableSection[1]"
             class="instance-options-input instance-options-input-message-hidden"
           />
-          <p>{{ subRegionInfo.calcPointAvailableSection[1] }}</p>
+          <p>{{ subRegionInfo.calcPointAvailableSection[1] + ' 分' }}</p>
+        </div>
+      </div>
+      <div>
+        <p class="instance-options-main-form-slider-p">
+          运行内存
+          <v-tooltip
+            right
+          >
+            <template #activator="{ on, attrs }">
+              <v-btn
+                rounded
+                icon
+                style="margin-left: 5px;"
+                v-bind="attrs"
+                to="/redirect?url=u5k.cn/8ynck"
+                v-on="on"
+              >
+                <v-icon size="20">
+                  mdi-help-circle-outline
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>运行内存是您的实例在运行过程中可被分配的最高RAM。有关RAM相关定义, 可点击按钮查看</span>
+          </v-tooltip>
+        </p>
+        <div class="instance-options-slider-div">
+          <p>{{ subRegionInfo.ramAvailableSection[0] + ' GB' }}</p>
+          <v-slider
+            v-model="selectedInfo.selectedRAM"
+            color="rgba(0, 163, 255)"
+            step="0.1"
+            thumb-label
+            ticks
+            :min="subRegionInfo.ramAvailableSection[0]"
+            :max="subRegionInfo.ramAvailableSection[1]"
+            class="instance-options-input instance-options-input-message-hidden"
+          />
+          <p>{{ subRegionInfo.ramAvailableSection[1] + ' GB' }}</p>
+        </div>
+      </div>
+      <div>
+        <p class="instance-options-main-form-slider-p">
+          存储空间
+          <v-tooltip
+            right
+          >
+            <template #activator="{ on, attrs }">
+              <v-btn
+                rounded
+                icon
+                style="margin-left: 5px;"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon size="20">
+                  mdi-help-circle-outline
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>存储空间是您的实例中可供您存放文件的空间大小</span>
+          </v-tooltip>
+        </p>
+        <div class="instance-options-slider-div">
+          <p>{{ subRegionInfo.diskAvailableSection[0] + ' GB' }}</p>
+          <v-slider
+            v-model="selectedInfo.selectedDiskSize"
+            color="rgba(0, 163, 255)"
+            step="1"
+            thumb-label
+            ticks
+            :min="subRegionInfo.diskAvailableSection[0]"
+            :max="subRegionInfo.diskAvailableSection[1]"
+            class="instance-options-input instance-options-input-message-hidden"
+          />
+          <p>{{ subRegionInfo.diskAvailableSection[1] + ' GB' }}</p>
+        </div>
+      </div>
+      <div>
+        <p class="instance-options-main-form-slider-p">
+          目标端口
+          <v-tooltip
+            right
+          >
+            <template #activator="{ on, attrs }">
+              <v-btn
+                rounded
+                icon
+                style="margin-left: 5px;"
+                v-bind="attrs"
+                to="/redirect?url=faq.runyun.cc/container/port-settings"
+                v-on="on"
+              >
+                <v-icon size="20">
+                  mdi-help-circle-outline
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>目标端口是用于启动与访问您在实例上的网络服务的端口。在购买后可再次修改, 有关更多信息可点击按钮查看</span>
+          </v-tooltip>
+        </p>
+        <div class="instance-create-selecters-div">
+          <v-select
+            v-model="selectedInfo.selectedPort"
+            :items="subRegionInfo.portAvailableValue"
+            label="选择端口"
+            outlined
+          />
         </div>
       </div>
     </v-form>
   </div>
 </template>
 <script>
+import { watch } from 'vue'
 import HttpUtils from '~/utils/HttpUtils.vue'
 export default {
   name: 'ContainerCreateInstanceOptions',
@@ -253,7 +361,7 @@ export default {
     subRegionInfo: {
       calcPointAvailableSection: [40, 100],
       ramAvailableSection: [1, 4],
-      portAvailableSection: [25565, 25590],
+      portAvailableValue: [25565, 25567, 25583, 25590],
       diskAvailableSection: [20, 40],
       price: {
         perCalcPoint: 0.1,
@@ -261,12 +369,16 @@ export default {
         perGigaByteROM: 1
       }
     },
-    selectedCountry: 0,
-    selectedRegion: 0,
-    selectedSubRegion: 0,
-    selectedCalcPoint: 40,
-    selectedRAM: 1.00,
-    selectedContainerType: 0,
+    selectedInfo: {
+      selectedCountry: 0,
+      selectedRegion: 0,
+      selectedSubRegion: 0,
+      selectedCalcPoint: 40,
+      selectedRAM: 1.0,
+      selectedDiskSize: 20,
+      selectedPort: null,
+      selectedContainerType: 0
+    },
     instanceName: '',
     containerType: [
       {
@@ -288,12 +400,16 @@ export default {
         isAvailable: true
       }
     ],
-    currentCost: '0.0'
+    currentCost: 0.00
   }),
   mounted () {
     this.getGlobalRegionInfo()
     this.getRegionBuyInfo()
-    this.$emit('updateCost', this.$data.currentCost)
+    this.calcCurrentCost(this.$data.selectedInfo)
+    // this.$emit('updateCost', this.$data.currentCost)
+    watch(this.$data.selectedInfo, (nowSelectObj) => {
+      this.calcCurrentCost(nowSelectObj)
+    })
   },
   methods: {
     getGlobalRegionInfo () {
@@ -301,9 +417,9 @@ export default {
     },
     getRegionBuyInfo (operation) {
       if (operation === true) {
-        this.selectedSubRegion = 0
+        this.$data.selectedInfo.selectedSubRegion = 0
       }
-      const currentSelectedRegionObject = this.availableSubRegion[this.selectedCountry][this.selectedRegion][this.selectedSubRegion]
+      const currentSelectedRegionObject = this.availableSubRegion[this.$data.selectedInfo.selectedCountry][this.$data.selectedInfo.selectedRegion][this.$data.selectedInfo.selectedSubRegion]
       if (currentSelectedRegionObject.name !== -1 && !(currentSelectedRegionObject.isAvailable === false)) {
         // this.sendGetToApi('/contained/create/getSubRegionBuyInfo', 'regionname=' + currentSelectedRegionObject.name, this.showTargetRegionInfo)
       }
@@ -313,44 +429,60 @@ export default {
     },
     getContainerInfo () {
       // To Be Done
+    },
+    calcCurrentCost (newSelectObject) {
+      this.$data.currentCost = newSelectObject.selectedCalcPoint * this.$data.subRegionInfo.price.perCalcPoint + newSelectObject.selectedRAM * this.$data.subRegionInfo.price.perGigaByteRAM + newSelectObject.selectedDiskSize + this.$data.subRegionInfo.price.perGigaByteROM
+      this.$emit('updateCost', this.$data.currentCost)
     }
   }
 }
 </script>
 <style>
-.instance-options-main-form{
+.instance-options-main-form {
   margin-left: 0;
   max-width: 80%;
 }
-.instance-options-main-form-slider-p{
+
+.instance-options-main-form-slider-p {
   margin-top: 25px;
   margin-bottom: 5px !important;
 }
-.instance-options-input{
+
+.instance-options-input {
   max-width: 40%;
   margin: 5px 0;
 }
-.v-btn-toggle{
+
+.v-btn-toggle {
   margin-bottom: 10px;
   display: block;
 }
-.instance-options-slider-div{
+
+.instance-options-slider-div {
   display: flex;
 }
-.instance-options-slider-div p{
+
+.instance-options-slider-div p {
   margin-top: auto;
   margin-bottom: auto;
   margin-right: 5px;
   margin-left: 5px;
   opacity: .5;
 }
-.instance-options-input-message-hidden .v-input__control .v-input__slot{
+
+.instance-create-selecters-div {
+  max-width: 40%;
+}
+
+.instance-options-input-message-hidden .v-input__control .v-input__slot {
   margin-bottom: 0;
 }
-.instance-options-input-message-hidden .v-input__control .v-messages{
+
+.instance-options-input-message-hidden .v-input__control .v-messages {
   display: none;
 }
-.instance-options-subregion-lable{
+
+.instance-options-subregion-lable {
   position: absolute;
   right: -30%;
   top: -100%;
@@ -358,7 +490,8 @@ export default {
   font-size: 12px;
   border-radius: 8px;
 }
-.instance-options-container-type-div{
+
+.instance-options-container-type-div {
   margin-top: 25px;
 }
 </style>

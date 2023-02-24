@@ -43,17 +43,20 @@ h1 {
   margin-left: auto;
   margin-right: auto;
 }
+
 p {
   font-weight: 200;
   margin-left: auto;
   margin-right: auto;
 }
-img{
+
+img {
   margin: 5px auto;
   max-width: 150px;
   max-height: 100px;
 }
-.options{
+
+.options {
   display: flex;
   margin: 10px auto;
   transition: all 0.5s;

@@ -98,10 +98,11 @@ export default {
 }
 </script>
 <style>
-.new-instance-btn{
+.new-instance-btn {
   margin-left: 10px;
 }
-.v-progress-circular__info{
+
+.v-progress-circular__info {
   display: unset;
   text-align: center;
 }

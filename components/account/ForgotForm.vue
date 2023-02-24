@@ -179,15 +179,17 @@ export default {
 </script>
 
 <style>
-.v-form{
+.v-form {
   margin: 5px auto;
   max-width: 35%;
   min-width: 300px;
 }
-.v-btn{
+
+.v-btn {
   margin: 0;
 }
-.v-input{
+
+.v-input {
   margin-top: 5px;
 }
 </style>

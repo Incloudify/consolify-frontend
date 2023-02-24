@@ -28,10 +28,11 @@ export default {
 }
 </script>
 <style>
-.v-toolbar__title{
+.v-toolbar__title {
   margin-right: 5px;
 }
-.v-btn{
+
+.v-btn {
   margin-left: 10px;
 }
 </style>

@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style>
-.snackbar-close-btn{
+.snackbar-close-btn {
   position: absolute;
   right: 3%;
   top: 14%;

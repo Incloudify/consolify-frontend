@@ -84,10 +84,12 @@ export default {
 .productbtn {
   width: 140px;
 }
-.text-h6{
+
+.text-h6 {
   margin-bottom: 15px;
 }
-.col{
+
+.col {
   padding-right: 2px;
 }
 </style>

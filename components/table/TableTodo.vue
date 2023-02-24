@@ -62,17 +62,20 @@ export default {
 }
 </script>
 <style>
-.complete-div span{
+.complete-div span {
   margin: 0 auto;
   font-size: 18px;
   margin-bottom: 10px;
 }
-.complete-div p{
+
+.complete-div p {
   margin: 0 auto;
   font-size: 7px;
   margin-bottom: 10px;
 }
-.complete-div .v-icon{
+
+.complete-div .v-icon {
   margin: 0 auto;
 }
+
 </style>

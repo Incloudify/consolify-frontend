@@ -264,7 +264,7 @@ export default {
 }
 </script>
 <style>
-.v-alert-arrearage{
+.v-alert-arrearage {
   font-size: 7px;
   margin: 0 4px;
 }
