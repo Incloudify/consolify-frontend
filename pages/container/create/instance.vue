@@ -73,7 +73,7 @@
     </v-col>
     <v-col class="main-col">
       <v-slide-x-reverse-transition>
-        <ContainerCreateInstanceOptions ref="createInstanceOptionsComponent" v-if="stepNum === 1" @updateCost="updateCost" @updateOptions="updateOptions" @receiveValidateStatus="receiveValidateStatus" />
+        <ContainerCreateInstanceOptions v-if="stepNum === 1" ref="createInstanceOptionsComponent" @updateCost="updateCost" @updateOptions="updateOptions" @receiveValidateStatus="receiveValidateStatus" />
       </v-slide-x-reverse-transition>
       <v-slide-x-reverse-transition>
         <ContainerCreateInstanceInfo v-if="stepNum === 2" />
@@ -151,6 +151,7 @@ export default {
     },
     receiveValidateStatus (validationStatus) {
       // To Be Done
+      this.$data.stepNum += 1
     }
   }
 }
