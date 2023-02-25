@@ -73,7 +73,7 @@
     </v-col>
     <v-col class="main-col">
       <v-slide-x-reverse-transition>
-        <ContainerCreateInstanceOptions v-if="stepNum === 1" @updateCost="updateCost" />
+        <ContainerCreateInstanceOptions ref="createInstanceOptionsComponent" v-if="stepNum === 1" @updateCost="updateCost" @updateOptions="updateOptions" @receiveValidateStatus="receiveValidateStatus" />
       </v-slide-x-reverse-transition>
       <v-slide-x-reverse-transition>
         <ContainerCreateInstanceInfo v-if="stepNum === 2" />
@@ -119,7 +119,7 @@
               上一步
             </v-btn>
           </v-fade-transition>
-          <v-btn elevation="0" :disabled="stepNum === 2 && agreementIsAgreed === false" color="primary" @click="stepNum += 1">
+          <v-btn elevation="0" :disabled="stepNum === 2 && agreementIsAgreed === false" color="primary" @click="stepNum === 1 ? validateForm : stepNum += 1">
             下一步
           </v-btn>
         </div>
@@ -133,7 +133,8 @@ export default {
   layout: 'default',
   data: () => ({
     stepNum: 1,
-    agreementIsAgreed: false
+    agreementIsAgreed: false,
+    optionsData: {}
   }),
   head: () => ({
     title: '创建容器云实例'
@@ -141,6 +142,15 @@ export default {
   methods: {
     updateCost (data) {
       this.$refs.currentCost.textContent = data
+    },
+    updateOptions (optionsObj) {
+      this.$data.optionsData = optionsObj
+    },
+    validateForm () {
+      this.$refs.createInstanceComponent.validateForm()
+    },
+    receiveValidateStatus (validationStatus) {
+      // To Be Done
     }
   }
 }

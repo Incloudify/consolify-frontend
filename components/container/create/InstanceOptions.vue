@@ -9,13 +9,25 @@
           label="为你的实例谱写新的篇章"
           outlined
           clearable
-          hint="实例显示名称, 4-24个字符, 允许中英文、数字与下划线"
+          :rules="formElementErrorStats.validationRules.instanceNameRule"
+          :error="formElementErrorStats.isError.instanceName"
+          :error-count="formElementErrorStats.errorCount.instanceName"
+          :error-messages="formElementErrorStats.errorMessage.instanceName"
+          hint="实例显示名称, 4-24个字符, 允许中英文、横杠、数字与下划线"
           maxlength="24"
           class="instance-options-input"
         />
       </div>
       <div>
-        <p>可用区</p>
+        <div style="display: flex;">
+          <p>可用区</p>
+          <v-scroll-x-transition>
+            <div v-if="formElementErrorStats.isError.serverRegion" style="color: rgb(255, 82, 82);">
+              <v-icon>mdi-alert-octagon-outline</v-icon>
+              <span>{{ formElementErrorStats.errorMessage.serverRegion }}</span>
+            </div>
+          </v-scroll-x-transition>
+        </div>
         <v-btn-toggle
           v-model="selectedInfo.selectedCountry"
           color="rgba(0, 163, 252)"
@@ -196,7 +208,7 @@
         </div>
       </div>
       <div>
-        <p class="instance-options-main-form-slider-p">
+        <p class="instance-options-main-selecters-p">
           目标端口
           <v-tooltip
             right
@@ -218,15 +230,38 @@
             <span>目标端口是用于启动与访问您在实例上的网络服务的端口。在购买后可再次修改, 有关更多信息可点击按钮查看</span>
           </v-tooltip>
         </p>
-        <div class="instance-create-selecters-div">
+        <div class="instance-options-selecters-div">
           <v-select
             v-model="selectedInfo.selectedPort"
             :items="subRegionInfo.portAvailableValue"
             label="选择端口"
+            :error="formElementErrorStats.isError.targetPort"
+            :error-count="formElementErrorStats.errorCount.targetPort"
+            :error-messages="formElementErrorStats.errorMessage.targetPort"
+            :class="formElementErrorStats.isError.targetPort ? '' : 'instance-options-selecters-message-hidden'"
             outlined
           />
         </div>
       </div>
+      <v-slide-x-transition>
+        <div v-if="containerType[selectedInfo.selectedContainerType].withJava">
+          <p class="instance-options-main-selecters-p">
+            Java 版本
+          </p>
+          <div class="instance-options-selecters-div">
+            <v-select
+              v-model="selectedInfo.selectedJavaVersion"
+              :items="subRegionInfo.javaVersions"
+              label="选择Java版本"
+              :error="formElementErrorStats.isError.javaVersion"
+              :error-count="formElementErrorStats.errorCount.javaVersion"
+              :error-messages="formElementErrorStats.errorMessage.javaVersion"
+              :class="formElementErrorStats.isError.javaVersion ? '' : 'instance-options-selecters-message-hidden'"
+              outlined
+            />
+          </div>
+        </div>
+      </v-slide-x-transition>
     </v-form>
   </div>
 </template>
@@ -367,7 +402,8 @@ export default {
         perCalcPoint: 0.1,
         perGigaByteRAM: 5,
         perGigaByteROM: 1
-      }
+      },
+      javaVersions: ['JRE 8.0', 'JDK 16.0', 'JDK 17.0']
     },
     selectedInfo: {
       selectedCountry: 0,
@@ -377,7 +413,8 @@ export default {
       selectedRAM: 1.0,
       selectedDiskSize: 20,
       selectedPort: null,
-      selectedContainerType: 0
+      selectedContainerType: 0,
+      selectedJavaVersion: null
     },
     instanceName: '',
     containerType: [
@@ -385,22 +422,58 @@ export default {
         id: 1,
         name: 'MCSM面板服',
         iconSrc: '~/static/container/icons/mcsm.png',
-        isAvailable: true
+        isAvailable: true,
+        withJava: true
       },
       {
         id: 2,
         name: 'Pterodactyl面板服',
         iconSrc: '~/static/container/icons/ptero.png',
-        isAvailable: false
+        isAvailable: false,
+        withJava: true
       },
       {
         id: 3,
         name: 'Docker',
         iconSrc: '~/static/container/icons/docker.png',
-        isAvailable: true
+        isAvailable: true,
+        withJava: false
       }
     ],
-    currentCost: 0.00
+    currentCost: 0.00,
+    formElementErrorStats: {
+      isError: {
+        instanceName: false,
+        serverRegion: false,
+        targetPort: false,
+        javaVersion: false
+      },
+      errorCount: {
+        instanceName: 1,
+        serverRegion: null,
+        targetPort: 1,
+        javaVersion: 1
+      },
+      errorMessage: {
+        instanceName: '',
+        serverRegion: '',
+        targetPort: '',
+        javaVersion: ''
+      },
+      validationRules: {
+        instanceNameRule: [
+          value => !!value || '世界, 遗忘我',
+          (value) => {
+            const instanceNamePattern = /\w([-A-Za-z0-9_][-A-Za-z0-9_][-A-Za-z0-9_][-A-Za-z0-9_]*)/
+            if (instanceNamePattern.test(value)) {
+              return true
+            } else {
+              return false || '需求4-24个字符, 仅允许中英文、横杠、数字与下划线'
+            }
+          }
+        ]
+      }
+    }
   }),
   mounted () {
     this.getGlobalRegionInfo()
@@ -409,6 +482,7 @@ export default {
     // this.$emit('updateCost', this.$data.currentCost)
     watch(this.$data.selectedInfo, (nowSelectObj) => {
       this.calcCurrentCost(nowSelectObj)
+      this.$emit('updateOptions', nowSelectObj)
     })
   },
   methods: {
@@ -433,6 +507,9 @@ export default {
     calcCurrentCost (newSelectObject) {
       this.$data.currentCost = newSelectObject.selectedCalcPoint * this.$data.subRegionInfo.price.perCalcPoint + newSelectObject.selectedRAM * this.$data.subRegionInfo.price.perGigaByteRAM + newSelectObject.selectedDiskSize + this.$data.subRegionInfo.price.perGigaByteROM
       this.$emit('updateCost', this.$data.currentCost)
+    },
+    validateForm () {
+      // To Be Done
     }
   }
 }
@@ -444,6 +521,11 @@ export default {
 }
 
 .instance-options-main-form-slider-p {
+  margin-top: 25px;
+  margin-bottom: 5px !important;
+}
+
+.instance-options-main-selecters-p {
   margin-top: 25px;
   margin-bottom: 5px !important;
 }
@@ -462,6 +544,10 @@ export default {
   display: flex;
 }
 
+.instance-options-selecters-message-hidden .v-input__control .v-text-field__details {
+  display: none !important;
+}
+
 .instance-options-slider-div p {
   margin-top: auto;
   margin-bottom: auto;
@@ -470,7 +556,7 @@ export default {
   opacity: .5;
 }
 
-.instance-create-selecters-div {
+.instance-options-selecters-div {
   max-width: 40%;
 }
 

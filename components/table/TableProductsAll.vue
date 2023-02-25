@@ -46,7 +46,7 @@ export default {
         },
         {
           key: 2,
-          productName: 'MCSM面板服',
+          productName: '容器云',
           link: '/container'
         },
         {
